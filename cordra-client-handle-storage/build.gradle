@@ -1,0 +1,30 @@
+apply plugin: 'java-library'
+
+group = 'net.cnri.cordra'
+archivesBaseName = 'cordra-client-handle-storage'
+version = rootProject.version
+
+dependencies {
+    compileOnly 'net.handle:handle-client:9.2.0'
+    compileOnly 'com.google.code.gson:gson:2.8.5'
+    compileOnly 'net.cnri:cnriutil:2.0'
+    compileOnly 'commons-codec:commons-codec:1.13'
+
+    def excludes = {
+        // exclude artifacts provided by Handle server
+        exclude group: 'com.google.code.gson', module: 'gson'
+        exclude group: 'net.cnri', module: 'cnriutil'
+        exclude group: 'commons-codec', module: 'commons-codec'
+    }
+
+    implementation project(':cordra-core'), { transitive = false }
+    implementation project(':cordra-client'), { transitive = false }
+    implementation 'org.slf4j:slf4j-api:1.7.28'
+    implementation 'net.cnri:cnri-javascript:2.0.0', excludes
+    implementation 'org.apache.httpcomponents:httpclient:4.5.10', excludes
+    implementation 'org.apache.httpcomponents:httpmime:4.5.10', excludes
+
+    runtime 'org.apache.logging.log4j:log4j-api:2.12.1'
+    runtime 'org.apache.logging.log4j:log4j-core:2.12.1'
+    runtime 'org.apache.logging.log4j:log4j-slf4j-impl:2.12.1'
+}

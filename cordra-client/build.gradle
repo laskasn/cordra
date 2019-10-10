@@ -1,0 +1,87 @@
+apply plugin: 'java-library'
+
+group = 'net.cnri.cordra'
+archivesBaseName = 'cordra-client'
+version = rootProject.version
+
+configurations.all {
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'commons-codec'
+        && details.requested.name == 'commons-codec'
+        && details.requested.version < '1.13') {
+            details.useTarget group: 'commons-codec', name: 'commons-codec', version: '1.13'
+        }
+    }
+}
+
+configurations {
+    toDistribute
+    apiOptional
+    api.extendsFrom apiOptional
+    implementationOptional
+    implementation.extendsFrom implementationOptional
+}
+
+dependencies {
+    api project(':cordra-core'), { transitive = false }
+
+    api 'org.apache.httpcomponents:httpclient:4.5.10'
+    api 'com.google.code.gson:gson:2.8.5'
+    implementation 'org.apache.httpcomponents:httpmime:4.5.10'
+    implementation 'net.cnri:cnriutil:2.0'
+    implementation 'org.slf4j:slf4j-api:1.7.28'
+
+    toDistribute 'org.apache.httpcomponents:httpclient:4.5.10'
+    toDistribute 'com.google.code.gson:gson:2.8.5'
+    toDistribute 'org.apache.httpcomponents:httpmime:4.5.10'
+    toDistribute 'net.cnri:cnriutil:2.0'
+    toDistribute 'org.slf4j:slf4j-api:1.7.28'
+
+    implementationOptional 'net.handle:handle-client:9.2.0'
+
+    implementationOptional 'org.apache.logging.log4j:log4j-api:2.12.1'
+    implementationOptional 'org.apache.logging.log4j:log4j-core:2.12.1'
+    implementationOptional 'org.apache.logging.log4j:log4j-slf4j-impl:2.12.1'
+
+    apiOptional 'org.eclipse.jetty:jetty-server:9.4.15.v20190215'
+    implementationOptional 'org.eclipse.jetty:jetty-webapp:9.4.15.v20190215'
+    implementationOptional 'org.eclipse.jetty:jetty-annotations:9.4.15.v20190215'
+
+    apiOptional 'com.github.fge:json-schema-validator:2.2.6'
+    implementationOptional 'com.github.fge:jackson-coreutils:1.8'
+    implementationOptional 'com.fasterxml.jackson.core:jackson-databind:2.9.9.3'
+    implementationOptional 'net.sf.jopt-simple:jopt-simple:5.0.4'
+    implementationOptional 'org.mongodb:mongo-java-driver:3.4.3'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'de.bwaldvogel:mongo-java-server:1.13.0'
+    testCompile project(':cordra-client-test')
+}
+
+test.dependsOn ':war'
+
+test {
+    testLogging {
+//        events "passed", "failed", "skipped"
+        events "failed", "skipped"
+    }
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        pom.getScopeMappings().setSkipUnmappedConfs(false)
+        pom.whenConfigured { pom ->
+            pom.dependencies.removeAll { dep -> dep.scope == 'test' }
+            pom.dependencies.findAll { pomDep ->
+                project.configurations.apiOptional.dependencies.any { confDep ->
+                    confDep.group == pomDep.groupId && confDep.name == pomDep.artifactId
+                }
+            }.each { dep -> dep.scope = 'compile'; dep.optional = true }
+            pom.dependencies.findAll { pomDep ->
+                project.configurations.implementationOptional.dependencies.any { confDep ->
+                    confDep.group == pomDep.groupId && confDep.name == pomDep.artifactId
+                }
+            }.each { dep -> dep.scope = 'runtime'; dep.optional = true }
+        }
+    }
+}

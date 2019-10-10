@@ -1,0 +1,200 @@
+apply plugin: 'war'
+
+group = 'net.cnri.cordra'
+archivesBaseName = 'cordra'
+version = '2.0.0'
+
+allprojects {
+    apply from: "$rootProject.projectDir/cnri.gradle"
+    repositories {
+        if (!project.ext.properties.repoBaseUri) {
+            maven { url 'https://download.oracle.com/maven' }  // for JE
+            jcenter()
+            mavenCentral()
+        }
+    }
+}
+
+configurations {
+    cordraWar
+    cordraSrc
+    toolsJars
+    cordraClientJsTgz
+}
+
+dependencies {
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.9.3'
+    compile 'com.github.fge:jackson-coreutils:1.8'
+    compile 'com.github.fge:json-schema-validator:2.2.6'
+    compile 'com.google.code.gson:gson:2.8.5'
+    compile 'com.amazonaws:aws-java-sdk-s3:1.11.630'
+    compile 'org.apache.curator:curator-framework:2.11.1'
+    compile 'org.apache.curator:curator-recipes:2.11.1'
+    compile 'org.apache.kafka:kafka_2.12:2.3.0'
+    compile 'org.apache.kafka:kafka-clients:2.3.0'
+    compile 'org.apache.solr:solr-solrj:8.1.1'
+    compile 'org.apache.zookeeper:zookeeper:3.4.14'
+    // pin to a known-to-work version of guava
+    compile 'com.google.guava:guava:17.0'
+    compile 'org.elasticsearch.client:elasticsearch-rest-high-level-client:6.8.3', { exclude group: 'org.elasticsearch', module: 'jna' }
+    compile 'org.mongodb:mongo-java-driver:3.11.0'
+    compile 'org.slf4j:slf4j-api:1.7.28'
+    compile 'org.apache.tika:tika-core:1.18'
+    compile 'org.apache.tika:tika-parsers:1.18', { exclude group: 'net.java.dev.jna', module: 'jna' }
+    // force version of jul-to-slf4j, used in Tika
+    compile 'org.slf4j:jul-to-slf4j:1.7.28'
+    compile 'com.sleepycat:je:7.5.11'
+    compile 'net.cnri:cnriutil:2.0'
+    compile 'net.cnri:cnri-javascript:2.0.0'
+    compile 'net.cnri:cnri-sessions:2.1.0'
+    compile 'net.handle:handle-client:9.2.0'
+    compile 'commons-codec:commons-codec:1.13'
+    compile 'org.apache.httpcomponents:httpclient:4.5.10'
+    compile 'org.apache.httpcomponents:httpmime:4.5.10'
+    compile 'net.cnri:cnri-microservices:1.0.1'
+    compile 'net.sf.jopt-simple:jopt-simple:5.0.4'
+    compile 'commons-io:commons-io:2.6'
+    compile 'net.dona.doip:doip-sdk:2.1.0'
+    compile project(':cordra-doip')
+    compile project(':cordra-core'), { transitive = false }
+
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+
+    runtime 'org.apache.logging.log4j:log4j-api:2.12.1'
+    runtime 'org.apache.logging.log4j:log4j-core:2.12.1'
+    runtime 'org.apache.logging.log4j:log4j-slf4j-impl:2.12.1'
+    runtime 'net.cnri:cnri-cors-filter:9.4.15'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.apache.curator:curator-test:2.11.1'
+    testCompile 'org.apache.logging.log4j:log4j-core:2.12.1'
+    // Mockito used for ObjectServlet test (consider not using it)
+    testCompile 'org.mockito:mockito-all:1.10.19'
+    testCompile 'org.testcontainers:testcontainers:1.12.1'
+    testCompile 'org.testcontainers:localstack:1.12.1'
+    testCompile 'org.testcontainers:elasticsearch:1.12.1'
+    testCompile 'de.bwaldvogel:mongo-java-server:1.13.0'
+
+    toolsJars 'com.sleepycat:je:4.1.27'
+    toolsJars 'javax.transaction:jta:1.1'
+    toolsJars 'net.sf.jopt-simple:jopt-simple:5.0.4'
+
+    cordraClientJsTgz 'net.cnri.cordra:cordra-client-js:2.0.12@tgz'
+}
+
+task buildVersionInfo {
+    doLast {
+        ByteArrayOutputStream idOut = new ByteArrayOutputStream()
+        exec {
+            ignoreExitValue true
+            commandLine 'sh', '-c', 'git rev-parse --short=12 HEAD || hg id -i'
+            standardOutput = idOut
+        }
+        ByteArrayOutputStream dateOut = new ByteArrayOutputStream()
+        exec {
+            ignoreExitValue true
+            environment 'TZ', 'UTC'
+            commandLine 'sh', '-c', 'git show -s --format=%cd --date=format:%Y%m%d%H%M%S HEAD || hg parents --template \'{date(date|localdate, "%Y%m%d%H%M%S")}\''
+            standardOutput = dateOut
+        }
+        String vcsDate = dateOut.toString().trim()
+        String vcsId = idOut.toString().trim()
+        String fullVersion = [version, vcsDate, vcsId].join(' ')
+        println 'Version ' + fullVersion
+        File versionFile = new File(rootProject.projectDir, 'src/main/webapp/WEB-INF/version.txt')
+        versionFile.text = fullVersion
+    }
+}
+
+task appendVersionQuery(type: Exec) {
+    workingDir rootProject.projectDir
+    commandLine './append-version-query.sh'
+}
+
+// Include version info when building WAR
+buildVersionInfo.mustRunAfter clean
+appendVersionQuery.mustRunAfter clean
+war.dependsOn buildVersionInfo
+war.dependsOn appendVersionQuery
+war {
+    mainSpec.exclude '*.html'
+    mainSpec.exclude 'js-test/*.html'
+    rootSpec.from('build/tmp/html-with-version')
+
+    from(configurations.toolsJars) {
+        into 'WEB-INF/tools'
+    }
+    from configurations.cordraClientJsTgz.collect { tarTree it }, {
+        include '*/dist/cordra-client.min.js'
+        include '*/dist/cordra-client.min.js.map'
+        eachFile { path = "lib/cordra-client/${name}" }
+        includeEmptyDirs = false
+    }
+}
+
+task srcDistExploded(type: Copy) {
+    mustRunAfter clean, buildVersionInfo
+    destinationDir project.distsDir
+    outputs.upToDateWhen { false }
+    String folderPath = 'cordra-' + version + '-src'
+    from(rootProject.projectDir) {
+        into folderPath
+        include 'settings.gradle'
+        include 'build.gradle'
+        include 'cnri.gradle'
+        include 'gradle/**'
+        include 'gradlew'
+        include 'gradlew.bat'
+        include 'append-version-query.sh'
+        include 'src/**'
+        include 'cordra-startup/build.gradle'
+        include 'cordra-startup/src/**'
+        include 'cordra-core/build.gradle'
+        include 'cordra-core/src/**'
+        include 'cordra-client/build.gradle'
+        include 'cordra-client/src/**'
+        include 'cordra-doip/build.gradle'
+        include 'cordra-doip/src/**'
+        include 'cordra-client-handle-storage/build.gradle'
+        include 'cordra-client-handle-storage/src/**'
+        include 'cordra-client-handle-storage/README.txt'
+        include 'cordra-technical-manual/**'
+        exclude 'cordra-technical-manual/.*'
+        exclude 'cordra-technical-manual/manual/_static'
+        exclude 'cordra-technical-manual/manual/_templates'
+        exclude 'cordra-technical-manual/_build'
+        exclude 'cordra-technical-manual/build'
+    }
+    from(rootProject.projectDir) {
+        into folderPath
+        include 'cordra-technical-manual/manual/_static/minimal-fixes.css'
+        include 'cordra-technical-manual/manual/_static/**/*.png'
+    }
+}
+
+task srcDistZip(type: Zip) {
+    dependsOn srcDistExploded
+    classifier 'src'
+    String folderPath = 'cordra-' + version + '-src'
+    from('build/distributions/' + folderPath) {
+        into folderPath
+    }
+}
+
+task distZip {
+    dependsOn ':cordra-startup:distZip'
+}
+
+test {
+    testLogging {
+//        events "passed", "failed", "skipped"
+        events "failed", "skipped"
+    }
+}
+
+artifacts {
+    cordraWar war
+    cordraSrc srcDistZip
+    def cordraDistFile = new File(rootProject.distsDir, archivesBaseName + '-' + version + '-distribution.zip')
+    archives file: cordraDistFile, builtBy: distZip
+}

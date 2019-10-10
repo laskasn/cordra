@@ -1,0 +1,34 @@
+{
+  "title": "Sample Document Repository",
+  "relationshipsButtonText": "Show Relationships",
+  "allowUserToSpecifySuffixOnCreate": true,
+  "numTypesForCreateDropdown": 15,
+  "aclUiSearchTypes": [ "User", "Group" ],
+  "searchResults": {
+    "includeType": true,
+    "includeModifiedDate": false,
+    "includeCreatedDate": false
+  },
+  "initialQuery": "*:*",
+  "initialFragment": "#",
+  "initialSortFields": "/name",
+  "initialFilter": "Document",
+  "navBarLinks": [
+    {
+      "type": "url",
+      "title": "Get Started",
+      "url": "intro.html"
+    },
+    {
+      "type": "query",
+      "title": "All Objects",
+      "query": "*:*",
+      "sortFields": "/name"
+    },
+    {
+      "type": "typeDropdown",
+      "title": "Show Only",
+      "maxItems": 15
+    }
+  ]
+}

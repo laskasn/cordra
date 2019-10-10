@@ -1,0 +1,23 @@
+#!/bin/sh
+
+PRG=$0
+
+# Resolve symlinks.
+while [ -L "$PRG" ]; do
+    ls=`/bin/ls -ld "$PRG"`
+    link=`/usr/bin/expr "$ls" : '.*-> \(.*\)$'`
+    if /usr/bin/expr "$link" : '/' > /dev/null; then
+	PRG="$link"
+    else
+	PRG="`/usr/bin/dirname $PRG`/$link"
+    fi
+done
+
+#unset JAVA_HOME
+unset CLASSPATH
+
+TOOLSDIR=`dirname "$PRG"`
+
+CP=$TOOLSDIR:$TOOLSDIR/../classes:$TOOLSDIR/../lib/\*:$TOOLSDIR/\*
+
+exec java -cp "${CP}" net.cnri.cordra.util.cmdline.ImportTool "$@"

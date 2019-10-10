@@ -1,0 +1,212 @@
+import org.apache.tools.ant.filters.ConcatFilter
+
+group = 'net.cnri.cordra'
+archivesBaseName = 'cordra-technical-manual'
+version = rootProject.version
+
+defaultTasks 'pdf', 'html'
+
+configurations {
+    mailerLib
+    oaiLib
+    recommendationsLib
+    pdfConfiguration
+    cordraClientJsTgz
+    cordraClientJsTypeDoc
+}
+
+dependencies {
+    mailerLib 'com.github.bbottema:emailaddress-rfc2822:2.1.3@jar', { transitive = false }
+    mailerLib 'com.sun.mail:jakarta.mail:1.6.4@jar', { transitive = false }
+    mailerLib 'org.simplejavamail:simple-java-mail:5.3.0@jar', { transitive = false }
+    oaiLib 'net.cnri.cordra:cordra-oai-pmh:1.0.3@war', { transitive = false }
+    recommendationsLib 'net.cnri.cordra:cordra-recommendations:1.0.1@war', { transitive = false }
+    cordraClientJsTgz 'net.cnri.cordra:cordra-client-js:2.0.12@tgz'
+    cordraClientJsTypeDoc 'net.cnri.cordra:cordra-client-js:2.0.12:typedoc@zip'
+}
+
+task makeClean(type: Exec) {
+    commandLine 'make', 'clean'
+    ignoreExitValue = true
+    doLast {
+        if (execResult.exitValue != 0) {
+            println(standardOutput.toString())
+            println("WARNING: Technical Manual not cleaned")
+//            throw new GradleException("exec failed; see output above")
+        }
+    }
+}
+
+clean.dependsOn makeClean
+
+task copyManual(type: Copy) {
+    into "${buildDir}/manual"
+    from 'manual', {
+        include '**/*.rst'
+        filter { String line ->
+            line.replace('../../', '../../../')
+        }
+    }
+    from 'manual', {
+        exclude '**/*.rst'
+    }
+}
+copyManual.mustRunAfter clean
+
+def createJavascriptMdTask(taskName, tailFilename) {
+    task (taskName, type:Copy) {
+        mustRunAfter copyManual
+        from configurations.cordraClientJsTgz.collect { tarTree it }
+        into "${buildDir}/manual/client"
+        include '*/README.md'
+        eachFile { path = name }
+        includeEmptyDirs = false
+        rename 'README.md', 'javascript.md'
+        def done = false
+        filter { line ->
+            if (line == '## API Docs') {
+                done = true
+            }
+            if (done) return null
+            else return line
+        }
+        filter ConcatFilter, append: file(tailFilename)
+    }
+}
+
+createJavascriptMdTask('javascriptMd', 'tail-of-javascript.md')
+createJavascriptMdTask('javascriptMdForPdf', 'tail-of-javascript-for-pdf.md')
+
+task extensionsDistExploded(type: Copy) {
+    destinationDir project.buildDir
+    outputs.upToDateWhen { false }
+    String folderPath = 'extensionsDist'
+    // Recommendations
+    from(configurations.recommendationsLib) {
+        into folderPath + '/recommendations'
+        include 'cordra-recommendations*.war'
+        rename { file -> 'cordra-recommendations.war' }
+    }
+    from('recommendations-example') {
+        into folderPath + '/recommendations'
+    }
+    // OAI-PMH
+    from(configurations.oaiLib) {
+        into folderPath + '/oai-pmh'
+        include 'cordra-oai-pmh*.war'
+        rename { file -> 'cordra-oai-pmh.war' }
+    }
+    from('oai-pmh-example') {
+        into folderPath + '/oai-pmh'
+    }
+    // User Registration
+    from configurations.cordraClientJsTgz.collect { tarTree it }, {
+        into folderPath + '/user-registration'
+        include '*/dist/cordra-client.min.js'
+        eachFile { path = "${folderPath}/user-registration/demo/${name}" }
+        includeEmptyDirs = false
+    }
+    from(configurations.mailerLib) {
+        into folderPath + '/user-registration/lib'
+    }
+    from('user-registration-example') {
+        into folderPath + '/user-registration'
+    }
+    // Everything else
+    from('manual/samples') {
+        into folderPath
+    }
+}
+
+task buildVersionInfo {
+    dependsOn extensionsDistExploded
+    doLast {
+        File versionFile = new File(buildDir, '/manual/version.txt')
+        versionFile.text = version
+    }
+}
+buildVersionInfo.mustRunAfter copyManual
+
+task makePdf(type: Exec) {
+    dependsOn copyManual, buildVersionInfo, javascriptMdForPdf
+    commandLine 'make', "SOURCEDIR=${buildDir}/manual", 'latexpdf'
+    standardOutput = new ByteArrayOutputStream()
+    errorOutput = standardOutput
+    ignoreExitValue = true
+    doLast {
+        if (execResult.exitValue != 0) {
+            println(standardOutput.toString())
+            println("WARNING: Technical Manual not built")
+//            throw new GradleException("exec failed; see output above")
+        }
+    }
+}
+makePdf.mustRunAfter makeClean
+
+task pdf(type: Copy) {
+    group 'build'
+    dependsOn clean, makePdf
+    outputs.upToDateWhen { false }
+    destinationDir distsDir
+    from('_build/latex') {
+        include 'Cordra.pdf'
+        rename { file -> archivesBaseName + '-' + version + '.pdf' }
+    }
+}
+
+task makeHtml(type: Exec) {
+    dependsOn copyManual, javascriptMd
+    commandLine 'make', "SOURCEDIR=${buildDir}/manual", 'html'
+    standardOutput = new ByteArrayOutputStream()
+    errorOutput = new ByteArrayOutputStream()
+    ignoreExitValue = true
+    doLast {
+        if (execResult.exitValue != 0) {
+            println(standardOutput.toString())
+            println(errorOutput.toString())
+            throw new GradleException("exec failed; see output above")
+        } else {
+            println(errorOutput.toString())
+        }
+        copy {
+            from configurations.cordraClientJsTypeDoc.collect { zipTree it }
+            into '_build/html/cordra-client-js-typedoc'
+            eachFile { fcd ->
+                fcd.relativePath = new RelativePath(true, fcd.relativePath.segments.drop(1))
+            }
+            includeEmptyDirs = false
+        }
+    }
+}
+makeHtml.mustRunAfter makeClean
+
+task html(type: Copy) {
+    group 'build'
+    dependsOn makeHtml
+    outputs.upToDateWhen { false }
+    into("$distsDir/$archivesBaseName-$version")
+    from('_build/html')
+}
+
+task htmlZip(type: Zip) {
+    dependsOn makeHtml
+    into("$archivesBaseName-$version")
+    from('_build/html')
+}
+
+task updateWebsiteDocs {
+    dependsOn makeHtml
+    doLast {
+        exec {
+            commandLine 'aws', 's3', 'sync', './_build/html', 's3://www.cordra-dev.net/documentation', '--no-progress', '--delete'
+        }
+        exec {
+            commandLine 'aws', 'cloudfront', 'create-invalidation', '--distribution-id', 'E3GXRISB8ZVQMK', '--paths', '/documentation/*'
+        }
+    }
+}
+
+artifacts {
+    pdfConfiguration file: new File(distsDir, archivesBaseName + '-' + version + '.pdf'), builtBy: pdf
+    archives htmlZip
+}

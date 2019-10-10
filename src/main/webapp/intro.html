@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">      <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-PmY9l28YgO4JwMKbTvgaS7XNZJ30MK9FAZjjzXtlqyZCqBY6X6bXIkM++IkyinN+" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/cordra.css">
+    <TITLE></TITLE>
+    <STYLE TYPE="text/css">
+    body {
+      padding-top: 0px !important;
+      margin: 0px;
+    }
+    h3 {
+      margin: 30px 0px;
+    }
+    h4 {
+      margin: 40px 0px 10px 0px;
+    }
+    p {
+      margin-top: 10px;
+    }
+    </STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" LINK="#0000ff" DIR="LTR">
+<h3>A few things to note before you get started...</h3>
+<h4>Administration</h4>
+<P>You can administer this Cordra instance using username <strong>'admin'</strong> and the password you set in the <strong>repoInit.json</strong> file before startup. The admin account can also be associated with a public/private keypair. Refer to the manual or the Cordra website for configuring the keypair.
+</P>
+<P>When signed in as admin, an <strong>'Admin'</strong> dropdown will appear at the top of the page.</P>
+<P>The options of the Admin dropdown allow you to define types (schemas and business rules), declare authentication and access control policies, configure handle record details, etc.</P>
+<P>You can authenticate as <strong>'admin'</strong> and create user and group records as needed. The create button is right next to the search bar.</P>
+<P>By default Cordra is configured to store documents and associate metadata with those documents.</P>
+
+<h4>Access to Digital Objects</h4>
+<P>Depending on the default access controls and controls that are set in the individual objects, the admin and other users may need to <strong>authenticate</strong> prior to searching, retrieving, or creating objects.</P>
+<P>By default, only <strong>authenticated</strong> users can create digital objects, and all users can search, view, and retrieve those objects.</P>
+
+<h4>Web Interface</h4>
+<P>You can authenticate by clicking on the <strong>"Sign in"</strong> menu button.</P>
+<P>You can search by typing keywords in the text box at the top-center and clicking the <strong>"Search"</strong> button.</P>
+<P>You can click on <strong>"All Objects"</strong> menu item to view all objects in the system. When first instantiated, the system has no objects to display.</P>
+
+<h4>APIs</h4>
+<P>Cordra is largely meant to be used as well as configured via its APIs. Cordra supports REST as well as DOIP APIs. Refer to the documentation for more details.</P>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.getJSON('design').done(function (design) {
+            $("#prefix").text(design.handleMintingConfig.prefix);
+        }).fail(function (response) {
+
+        })
+    });
+    </script>
+</BODY>
+</HTML>

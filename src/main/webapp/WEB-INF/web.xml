@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="3.0">
+
+    <distributable/>
+
+    <session-config>
+        <cookie-config>
+            <http-only>true</http-only>
+            <secure>true</secure>
+        </cookie-config>
+    </session-config>
+
+<!--
+    <context-param>
+        <param-name>isReadOnly</param-name>
+        <param-value>true</param-value>
+    </context-param>
+-->
+
+<!--
+    <context-param>
+        <param-name>zookeeperConnectionString</param-name>
+        <param-value>localhost:2181/cordra</param-value>
+    </context-param>
+    <context-param>
+        <param-name>configName</param-name>
+        <param-value>/config.json</param-value>
+    </context-param>
+-->
+
+    <listener>
+        <listener-class>net.cnri.cordra.web.LoggingStartupListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>net.cnri.cordra.auth.CordraHttpSessionManagerListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>net.cnri.cordra.web.WebappStartupListener</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>cross-origin</filter-name>
+        <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>allowedMethods</param-name>
+            <param-value>GET,HEAD,POST,DELETE,PUT</param-value>
+        </init-param>
+        <init-param>
+            <param-name>allowedHeaders</param-name>
+            <param-value>*</param-value>
+        </init-param>
+        <init-param>
+            <param-name>exposedHeaders</param-name>
+            <param-value>Location,X-Schema,X-Permission,WWW-Authenticate,Content-Length,Content-Disposition,Origin,Content-Range</param-value>
+        </init-param>
+        <init-param>
+            <param-name>chainPreflight</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>allowCredentials</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>cross-origin</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+<!--
+    <filter>
+        <filter-name>RemoteAddressRestrictionFilter</filter-name>
+        <filter-class>net.cnri.cordra.web.RemoteAddressRestrictionFilter</filter-class>
+        <init-param>
+            <param-name>addresses</param-name>
+            <param-value>localhost</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>RemoteAddressRestrictionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+-->
+
+    <filter>
+        <filter-name>AccessTokenFilter</filter-name>
+        <filter-class>net.cnri.cordra.web.AccessTokenFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>AccessTokenFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    <filter>
+        <filter-name>RequestContextFilter</filter-name>
+        <filter-class>net.cnri.cordra.web.RequestContextFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>RequestContextFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>net.cnri.cordra.auth.CordraHttpSessionManagerFilter</filter-name>
+        <filter-class>net.cnri.cordra.auth.CordraHttpSessionManagerFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>net.cnri.cordra.auth.CordraHttpSessionManagerFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>authorization</filter-name>
+        <filter-class>net.cnri.cordra.auth.AuthorizationFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>authorization</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+
+</web-app>

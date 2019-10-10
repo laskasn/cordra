@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration>
+    <Properties>
+        <Property name="LOG_DIR">${sys:cordra.data:-.}/logs</Property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="error.log" filePattern="${LOG_DIR}/error.log-%d{yyyyMM}">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSSZ} [%thread] %-5level %logger{36} %X{requestId} - %m%n</Pattern>
+            </PatternLayout>
+            <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+        </RollingFile>
+        <RollingFile name="handleAccessLogAppender" filePattern="${LOG_DIR}/handle-access.log-%d{yyyyMM}">
+            <PatternLayout pattern="%msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="org.eclipse.jetty.annotations.AnnotationParser" level="error"/>
+        <Logger name="com.amazonaws.services.s3.AmazonS3Client" level="error"/>
+        <Logger name="org.apache.kafka" level="warn"/>
+        <Logger name="net.cnri.cordra.storage.InstrumentedCordraStorage" level="trace"/>
+        <Logger name="net.cnri.cordra.indexer.InstrumentedCordraIndexer" level="trace"/>
+        <Logger name="net.cnri.cordra.replication.kafka.InstrumentedReplicationProducer" level="trace"/>
+        <Logger name="net.cnri.cordra.sync.InstrumentedNameLocker" level="trace"/>
+        <Logger name="net.cnri.cordra.sync.InstrumentedTransactionManager" level="trace"/>
+        <Logger name="net.cnri.cordra.CordraService" level="trace"/>
+
+        <Logger name="handleAccessLogger" level="info" additivity="false">
+            <AppenderRef ref="handleAccessLogAppender"/>
+        </Logger>
+
+        <Root level="info"><AppenderRef ref="error.log"/></Root>
+    </Loggers>
+</Configuration>

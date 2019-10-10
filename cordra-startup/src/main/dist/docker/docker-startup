@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+CORDRADIR="$(dirname $(dirname "$0"))"
+
+if [[ ! -z "$CORDRA_ADMIN_PASS" || ! -z "$CORDRA_BASE_URI" || ! -z "$CORDRA_PREFIX" || ! -z "$CORDRA_HDL_ADMIN" ]]; then
+    echo "{ " > "$CORDRADIR/data/repoInit.json"
+    if [ ! -z "$CORDRA_BASE_URI" ]; then echo "  \"baseUri\": \"${CORDRA_BASE_URI}\"," >> "$CORDRADIR/data/repoInit.json"; fi
+    if [ ! -z "$CORDRA_PREFIX" ]; then echo "  \"prefix\": \"${CORDRA_PREFIX}\"," >> "$CORDRADIR/data/repoInit.json"; fi
+    if [ ! -z "$CORDRA_HDL_ADMIN" ]; then echo "  \"handleAdminIdentity\": \"${CORDRA_HDL_ADMIN}\"," >> "$CORDRADIR/data/repoInit.json"; fi
+    if [ ! -z "$CORDRA_ADMIN_PASS" ]; then echo "  \"adminPassword\": \"${CORDRA_ADMIN_PASS}\"," >> "$CORDRADIR/data/repoInit.json"; fi
+    sed -i "$ s/.$/\n}\n/" "$CORDRADIR/data/repoInit.json"
+fi
+
+if [ -f /opt/cordra/config.json ]; then
+    cp /opt/cordra/config.json /opt/cordra/data/config.json
+else
+    echo "{\"httpPort\": 8080,\"httpsPort\": 8443,\"listenAddress\": \"0.0.0.0\"}" > "$CORDRADIR/data/config.json"
+fi
+
+if [ -f /opt/cordra/privatekey ]; then
+    cp /opt/cordra/privatekey /opt/cordra/data/privatekey
+fi
+
+if [ -f /opt/cordra/publickey ]; then
+    cp /opt/cordra/publickey /opt/cordra/data/publickey
+fi
+
+"$CORDRADIR/startup"

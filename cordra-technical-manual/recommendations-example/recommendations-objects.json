@@ -1,0 +1,1058 @@
+{
+  "results": [
+    {
+      "id": "test/61d63ea2fab05688976a",
+      "type": "Book",
+      "content": {
+        "id": "test/61d63ea2fab05688976a",
+        "title": "Frankenstein; Or, The Modern Prometheus",
+        "author": "Mary Wollstonecraft Shelley"
+      }
+    },
+    {
+      "id": "test/8218a405869efaa46853",
+      "type": "Book",
+      "content": {
+        "id": "test/8218a405869efaa46853",
+        "title": "An Occurrence at Owl Creek Bridge",
+        "author": "Ambrose Bierce"
+      }
+    },
+    {
+      "id": "test/769a1477b8d38ce2bd5c",
+      "type": "Book",
+      "content": {
+        "id": "test/769a1477b8d38ce2bd5c",
+        "title": "Uncle Tom's Cabin",
+        "author": "Harriet Beecher Stowe"
+      }
+    },
+    {
+      "id": "test/64561a6a7e3912d0bbc8",
+      "type": "Book",
+      "content": {
+        "id": "test/64561a6a7e3912d0bbc8",
+        "title": "Tractatus Logico-Philosophicus",
+        "author": "Ludwig Wittgenstein"
+      }
+    },
+    {
+      "id": "test/3db2049f1bd299829d62",
+      "type": "Book",
+      "content": {
+        "id": "test/3db2049f1bd299829d62",
+        "title": "How the Other Half Lives: Studies Among the Tenements of New York",
+        "author": "Jacob A. Riis"
+      }
+    },
+    {
+      "id": "test/40dae17bbf7c2cb787a8",
+      "type": "Book",
+      "content": {
+        "id": "test/40dae17bbf7c2cb787a8",
+        "title": "Le Morte d'Arthur: Volume 1",
+        "author": "Sir Thomas Malory"
+      }
+    },
+    {
+      "id": "test/3795ea5a28c48ac2fc3e",
+      "type": "Book",
+      "content": {
+        "id": "test/3795ea5a28c48ac2fc3e",
+        "title": "Candide",
+        "author": "Voltaire"
+      }
+    },
+    {
+      "id": "test/e321e4126974b9818625",
+      "type": "Book",
+      "content": {
+        "id": "test/e321e4126974b9818625",
+        "title": "Also sprach Zarathustra",
+        "author": "Friedrich Wilhelm Nietzsche"
+      }
+    },
+    {
+      "id": "test/4a3321ea119f0b987393",
+      "type": "Book",
+      "content": {
+        "id": "test/4a3321ea119f0b987393",
+        "title": "Anthem",
+        "author": "Ayn Rand"
+      }
+    },
+    {
+      "id": "test/39086a3738cdb1e675d9",
+      "type": "Book",
+      "content": {
+        "id": "test/39086a3738cdb1e675d9",
+        "title": "Ion",
+        "author": "Plato"
+      }
+    },
+    {
+      "id": "test/ea70e31beccbf70da39e",
+      "type": "Book",
+      "content": {
+        "id": "test/ea70e31beccbf70da39e",
+        "title": "The Brothers Karamazov",
+        "author": "Fyodor Dostoyevsky"
+      }
+    },
+    {
+      "id": "test/01e4a6c900a774f90e0c",
+      "type": "Book",
+      "content": {
+        "id": "test/01e4a6c900a774f90e0c",
+        "title": "The Importance of Being Earnest: A Trivial Comedy for Serious People",
+        "author": "Oscar Wilde"
+      }
+    },
+    {
+      "id": "test/1ec48a96f5910eebd636",
+      "type": "Book",
+      "content": {
+        "id": "test/1ec48a96f5910eebd636",
+        "title": "History of the Peninsular War Volume I",
+        "author": "Robert Southey"
+      }
+    },
+    {
+      "id": "test/8d80a3bd449be69de346",
+      "type": "Book",
+      "content": {
+        "id": "test/8d80a3bd449be69de346",
+        "title": "Pride and Prejudice",
+        "author": "Jane Austen"
+      }
+    },
+    {
+      "id": "test/aab616d311993563f977",
+      "type": "Book",
+      "content": {
+        "id": "test/aab616d311993563f977",
+        "title": "The Odyssey",
+        "author": "Homer"
+      }
+    },
+    {
+      "id": "test/5d6315d5893ad52b5016",
+      "type": "Book",
+      "content": {
+        "id": "test/5d6315d5893ad52b5016",
+        "title": "The Hound of the Baskervilles",
+        "author": "Arthur Conan Doyle"
+      }
+    },
+    {
+      "id": "test/6e0413c6d8a555780c69",
+      "type": "Book",
+      "content": {
+        "id": "test/6e0413c6d8a555780c69",
+        "title": "Lysistrata",
+        "author": "Aristophanes"
+      }
+    },
+    {
+      "id": "test/1acc9f27da15c72ea9c7",
+      "type": "Book",
+      "content": {
+        "id": "test/1acc9f27da15c72ea9c7",
+        "title": "The Problems of Philosophy",
+        "author": "Bertrand Russell"
+      }
+    },
+    {
+      "id": "test/93b7096f8b54f0c8a53f",
+      "type": "Book",
+      "content": {
+        "id": "test/93b7096f8b54f0c8a53f",
+        "title": "The Clockwork Man",
+        "author": "E. V. Odle"
+      }
+    },
+    {
+      "id": "test/0a7410e663bebe7e9c8b",
+      "type": "Book",
+      "content": {
+        "id": "test/0a7410e663bebe7e9c8b",
+        "title": "A Tale of Two Cities",
+        "author": "Charles Dickens"
+      }
+    },
+    {
+      "id": "test/b55fb6e48da60e8d8469",
+      "type": "Book",
+      "content": {
+        "id": "test/b55fb6e48da60e8d8469",
+        "title": "The Prophet",
+        "author": "Kahlil Gibran"
+      }
+    },
+    {
+      "id": "test/15794405088af98b1d54",
+      "type": "Book",
+      "content": {
+        "id": "test/15794405088af98b1d54",
+        "title": "Et dukkehjem. English",
+        "author": "Henrik Ibsen"
+      }
+    },
+    {
+      "id": "test/db05cfc1744c2800e88c",
+      "type": "Book",
+      "content": {
+        "id": "test/db05cfc1744c2800e88c",
+        "title": "The Federalist Papers",
+        "author": "Alexander Hamilton and John Jay and James Madison"
+      }
+    },
+    {
+      "id": "test/48c9ae852819847875c8",
+      "type": "Book",
+      "content": {
+        "id": "test/48c9ae852819847875c8",
+        "title": "Adventures of Huckleberry Finn",
+        "author": "Mark Twain"
+      }
+    },
+    {
+      "id": "test/a4a027d57b9eb103283b",
+      "type": "Book",
+      "content": {
+        "id": "test/a4a027d57b9eb103283b",
+        "title": "The Wonderful Wizard of Oz",
+        "author": "L. Frank Baum"
+      }
+    },
+    {
+      "id": "test/e132be71c8e256bc648c",
+      "type": "Book",
+      "content": {
+        "id": "test/e132be71c8e256bc648c",
+        "title": "Grimms' Fairy Tales",
+        "author": "Jacob Grimm and Wilhelm Grimm"
+      }
+    },
+    {
+      "id": "test/ff0bec72b55eb4a3ebae",
+      "type": "Book",
+      "content": {
+        "id": "test/ff0bec72b55eb4a3ebae",
+        "title": "Little Women",
+        "author": "Louisa May Alcott"
+      }
+    },
+    {
+      "id": "test/e0c42a8afce6f04a1c49",
+      "type": "Book",
+      "content": {
+        "id": "test/e0c42a8afce6f04a1c49",
+        "title": "Oliver Twist",
+        "author": "Charles Dickens"
+      }
+    },
+    {
+      "id": "test/bbfe39fc915b12c1b801",
+      "type": "Book",
+      "content": {
+        "id": "test/bbfe39fc915b12c1b801",
+        "title": "A Modest Proposal",
+        "author": "Jonathan Swift"
+      }
+    },
+    {
+      "id": "test/90b8c3c6ed24c0db985e",
+      "type": "Book",
+      "content": {
+        "id": "test/90b8c3c6ed24c0db985e",
+        "title": "Alice's Adventures in Wonderland",
+        "author": "Lewis Carroll"
+      }
+    },
+    {
+      "id": "test/5ca909ad69347ae0d8f6",
+      "type": "Book",
+      "content": {
+        "id": "test/5ca909ad69347ae0d8f6",
+        "title": "Prestuplenie i nakazanie. English",
+        "author": "Fyodor Dostoyevsky"
+      }
+    },
+    {
+      "id": "test/69bd2a06ef254fa661b5",
+      "type": "Book",
+      "content": {
+        "id": "test/69bd2a06ef254fa661b5",
+        "title": "Anna Karenina",
+        "author": "graf Leo Tolstoy"
+      }
+    },
+    {
+      "id": "test/6e4e4bad8133cc23b1dd",
+      "type": "Book",
+      "content": {
+        "id": "test/6e4e4bad8133cc23b1dd",
+        "title": "The Yellow Wallpaper",
+        "author": "Charlotte Perkins Gilman"
+      }
+    },
+    {
+      "id": "test/eba40e0fa6a09cf5a917",
+      "type": "Book",
+      "content": {
+        "id": "test/eba40e0fa6a09cf5a917",
+        "title": "Narrative of the Captivity and Restoration of Mrs. Mary Rowlandson",
+        "author": "Mary White Rowlandson"
+      }
+    },
+    {
+      "id": "test/15318d319939593b37d6",
+      "type": "Book",
+      "content": {
+        "id": "test/15318d319939593b37d6",
+        "title": "A Christmas Carol in Prose; Being a Ghost Story of Christmas",
+        "author": "Charles Dickens"
+      }
+    },
+    {
+      "id": "test/cc6fc48d372a58ab224e",
+      "type": "Book",
+      "content": {
+        "id": "test/cc6fc48d372a58ab224e",
+        "title": "The Autobiography of Benjamin Franklin",
+        "author": "Benjamin Franklin"
+      }
+    },
+    {
+      "id": "test/62e52d2ac616f25dfddd",
+      "type": "User",
+      "content": {
+        "id": "test/62e52d2ac616f25dfddd",
+        "username": "paula",
+        "password": "password"
+      }
+    },
+    {
+      "id": "test/8a8deed44623d4c44268",
+      "type": "User",
+      "content": {
+        "id": "test/8a8deed44623d4c44268",
+        "username": "jane",
+        "password": "password"
+      }
+    },
+    {
+      "id": "test/4c0761a5ecbd26dc1f0f",
+      "type": "Book",
+      "content": {
+        "id": "test/4c0761a5ecbd26dc1f0f",
+        "title": "The Scarlet Letter",
+        "author": "Nathaniel Hawthorne"
+      }
+    },
+    {
+      "id": "test/831cfff65e13be91d0b3",
+      "type": "Book",
+      "content": {
+        "id": "test/831cfff65e13be91d0b3",
+        "title": "The Iliad",
+        "author": "Homer"
+      }
+    },
+    {
+      "id": "test/5ec5d79e964988898049",
+      "type": "Book",
+      "content": {
+        "id": "test/5ec5d79e964988898049",
+        "title": "Ulysses",
+        "author": "James Joyce"
+      }
+    },
+    {
+      "id": "test/e78e566e88c5e23c03fd",
+      "type": "Book",
+      "content": {
+        "id": "test/e78e566e88c5e23c03fd",
+        "title": "Essays of Michel de Montaigne - Complete",
+        "author": "Michel de Montaigne"
+      }
+    },
+    {
+      "id": "test/847375438558f768feec",
+      "type": "Book",
+      "content": {
+        "id": "test/847375438558f768feec",
+        "title": "The Picture of Dorian Gray",
+        "author": "Oscar Wilde"
+      }
+    },
+    {
+      "id": "test/66fc0da06cb874622b93",
+      "type": "Book",
+      "content": {
+        "id": "test/66fc0da06cb874622b93",
+        "title": "The Time Machine",
+        "author": "H. G. Wells"
+      }
+    },
+    {
+      "id": "test/bd830d5a1e5e54926bc5",
+      "type": "Book",
+      "content": {
+        "id": "test/bd830d5a1e5e54926bc5",
+        "title": "The Devil's Dictionary",
+        "author": "Ambrose Bierce"
+      }
+    },
+    {
+      "id": "test/4d80b4a2b7679b66c9a2",
+      "type": "Book",
+      "content": {
+        "id": "test/4d80b4a2b7679b66c9a2",
+        "title": "Sense and Sensibility",
+        "author": "Jane Austen"
+      }
+    },
+    {
+      "id": "test/22b0ee146d32cedf03a5",
+      "type": "Book",
+      "content": {
+        "id": "test/22b0ee146d32cedf03a5",
+        "title": "Dark Windows",
+        "author": "Bryce Walton"
+      }
+    },
+    {
+      "id": "test/24b572fa6e06a596968c",
+      "type": "Book",
+      "content": {
+        "id": "test/24b572fa6e06a596968c",
+        "title": "Puppet Government",
+        "author": "George Revelle"
+      }
+    },
+    {
+      "id": "test/8862e3f6eee7b361b184",
+      "type": "Book",
+      "content": {
+        "id": "test/8862e3f6eee7b361b184",
+        "title": "The Count of Monte Cristo, Illustrated",
+        "author": "Alexandre Dumas"
+      }
+    },
+    {
+      "id": "test/7fa431cdb511aa828e71",
+      "type": "Book",
+      "content": {
+        "id": "test/7fa431cdb511aa828e71",
+        "title": "Game Preserve",
+        "author": "Rog Phillips"
+      }
+    },
+    {
+      "id": "test/3c74ccd9b1c8e4497291",
+      "type": "Book",
+      "content": {
+        "id": "test/3c74ccd9b1c8e4497291",
+        "title": "The Republic",
+        "author": "Plato"
+      }
+    },
+    {
+      "id": "test/15cd4690a97469b0b1d2",
+      "type": "Book",
+      "content": {
+        "id": "test/15cd4690a97469b0b1d2",
+        "title": "Great Expectations",
+        "author": "Charles Dickens"
+      }
+    },
+    {
+      "id": "test/bf8eee9cbf53a9af57e7",
+      "type": "Book",
+      "content": {
+        "id": "test/bf8eee9cbf53a9af57e7",
+        "title": "A Treatise on Electricity",
+        "author": "Francis Penrose"
+      }
+    },
+    {
+      "id": "test/77f18a3d037a4b67f059",
+      "type": "Book",
+      "content": {
+        "id": "test/77f18a3d037a4b67f059",
+        "title": "The Life and Adventures of Robinson Crusoe",
+        "author": "Daniel Defoe"
+      }
+    },
+    {
+      "id": "test/e439618ec6682224a52c",
+      "type": "Book",
+      "content": {
+        "id": "test/e439618ec6682224a52c",
+        "title": "Walden, and On The Duty Of Civil Disobedience",
+        "author": "Henry David Thoreau"
+      }
+    },
+    {
+      "id": "test/d8e3775efe225f3c5cb8",
+      "type": "Book",
+      "content": {
+        "id": "test/d8e3775efe225f3c5cb8",
+        "title": "The Poors",
+        "author": "Harry Lorayne"
+      }
+    },
+    {
+      "id": "test/560ecaaddec14f181231",
+      "type": "Book",
+      "content": {
+        "id": "test/560ecaaddec14f181231",
+        "title": "Pygmalion",
+        "author": "Bernard Shaw"
+      }
+    },
+    {
+      "id": "test/b7a73d2f2ccea676c0c4",
+      "type": "Book",
+      "content": {
+        "id": "test/b7a73d2f2ccea676c0c4",
+        "title": "The Adventures of Tom Sawyer",
+        "author": "Mark Twain"
+      }
+    },
+    {
+      "id": "test/6c41000e1f23bad21a74",
+      "type": "Book",
+      "content": {
+        "id": "test/6c41000e1f23bad21a74",
+        "title": "The Jungle",
+        "author": "Upton Sinclair"
+      }
+    },
+    {
+      "id": "test/31bf98d5dcf7e7bc7214",
+      "type": "Book",
+      "content": {
+        "id": "test/31bf98d5dcf7e7bc7214",
+        "title": "The Red Record",
+        "author": "Ida B. Wells-Barnett"
+      }
+    },
+    {
+      "id": "test/71ca48f045b561627e83",
+      "type": "Book",
+      "content": {
+        "id": "test/71ca48f045b561627e83",
+        "title": "Siddhartha",
+        "author": "Hermann Hesse"
+      }
+    },
+    {
+      "id": "test/dfbb9c64307a55e22601",
+      "type": "Book",
+      "content": {
+        "id": "test/dfbb9c64307a55e22601",
+        "title": "The Legend of Sleepy Hollow",
+        "author": "Washington Irving"
+      }
+    },
+    {
+      "id": "test/d28768913e8f5b8601dd",
+      "type": "Book",
+      "content": {
+        "id": "test/d28768913e8f5b8601dd",
+        "title": "The Philippine Islands, 1493-1898, Volume 33, 1519-1522",
+        "author": "Antonio Pigafetta"
+      }
+    },
+    {
+      "id": "test/f261ed2337c07726f7a5",
+      "type": "Book",
+      "content": {
+        "id": "test/f261ed2337c07726f7a5",
+        "title": "A Study in Scarlet",
+        "author": "Arthur Conan Doyle"
+      }
+    },
+    {
+      "id": "test/80e16ac71eabc8c8e34a",
+      "type": "Book",
+      "content": {
+        "id": "test/80e16ac71eabc8c8e34a",
+        "title": "Dracula",
+        "author": "Bram Stoker"
+      }
+    },
+    {
+      "id": "test/81b18ca1932b6ff491ac",
+      "type": "Book",
+      "content": {
+        "id": "test/81b18ca1932b6ff491ac",
+        "title": "The Innocents Abroad",
+        "author": "Mark Twain"
+      }
+    },
+    {
+      "id": "test/ce400334afb3b1aa4f06",
+      "type": "Book",
+      "content": {
+        "id": "test/ce400334afb3b1aa4f06",
+        "title": "Treasure Island",
+        "author": "Robert Louis Stevenson"
+      }
+    },
+    {
+      "id": "test/c398cc9d30cdf306506b",
+      "type": "Book",
+      "content": {
+        "id": "test/c398cc9d30cdf306506b",
+        "title": "Autobiography of Benjamin Franklin",
+        "author": "Benjamin Franklin"
+      }
+    },
+    {
+      "id": "test/618d156647e0e4724e9a",
+      "type": "Book",
+      "content": {
+        "id": "test/618d156647e0e4724e9a",
+        "title": "Metamorphosis",
+        "author": "Franz Kafka"
+      }
+    },
+    {
+      "id": "test/fc7cf0eefe24ffe45771",
+      "type": "Book",
+      "content": {
+        "id": "test/fc7cf0eefe24ffe45771",
+        "title": "The Sign of the Four",
+        "author": "Arthur Conan Doyle"
+      }
+    },
+    {
+      "id": "test/9a232f8bbf44ea3f407a",
+      "type": "Book",
+      "content": {
+        "id": "test/9a232f8bbf44ea3f407a",
+        "title": "The Awakening, and Selected Short Stories",
+        "author": "Kate Chopin"
+      }
+    },
+    {
+      "id": "test/8005f9e22a2b52476ecc",
+      "type": "Book",
+      "content": {
+        "id": "test/8005f9e22a2b52476ecc",
+        "title": "The Interesting Narrative of the Life of Olaudah Equiano, Or Gustavus Vassa, The African",
+        "author": "Equiano"
+      }
+    },
+    {
+      "id": "test/99981741ccbdbe3f577b",
+      "type": "Book",
+      "content": {
+        "id": "test/99981741ccbdbe3f577b",
+        "title": "The Elements of Style",
+        "author": "William Strunk"
+      }
+    },
+    {
+      "id": "test/71e6c554fd98fadf1723",
+      "type": "Book",
+      "content": {
+        "id": "test/71e6c554fd98fadf1723",
+        "title": "Songs of Innocence, and Songs of Experience",
+        "author": "William Blake"
+      }
+    },
+    {
+      "id": "test/4529a1c8c70676c7fcfa",
+      "type": "Book",
+      "content": {
+        "id": "test/4529a1c8c70676c7fcfa",
+        "title": "A History of the Philippines",
+        "author": "David P. Barrows"
+      }
+    },
+    {
+      "id": "test/ffd7bd22d488b776c32d",
+      "type": "Book",
+      "content": {
+        "id": "test/ffd7bd22d488b776c32d",
+        "title": "The Secret Garden",
+        "author": "Frances Hodgson Burnett"
+      }
+    },
+    {
+      "id": "test/f766ebbd189631ab24f4",
+      "type": "Book",
+      "content": {
+        "id": "test/f766ebbd189631ab24f4",
+        "title": "The Complete Works of William Shakespeare",
+        "author": "William Shakespeare"
+      }
+    },
+    {
+      "id": "test/82e12fccc10e0f3307aa",
+      "type": "Book",
+      "content": {
+        "id": "test/82e12fccc10e0f3307aa",
+        "title": "Going West",
+        "author": "Basil King"
+      }
+    },
+    {
+      "id": "test/ec1bdb6e54efc5828dcc",
+      "type": "Book",
+      "content": {
+        "id": "test/ec1bdb6e54efc5828dcc",
+        "title": "The Slang Dictionary: Etymological, Historical and Andecdotal",
+        "author": "John Camden Hotten"
+      }
+    },
+    {
+      "id": "test/a596acd6f64b1eec3f38",
+      "type": "Book",
+      "content": {
+        "id": "test/a596acd6f64b1eec3f38",
+        "title": "Anne of Green Gables",
+        "author": "L. M. Montgomery"
+      }
+    },
+    {
+      "id": "test/2da8ab98b177af09e85a",
+      "type": "Book",
+      "content": {
+        "id": "test/2da8ab98b177af09e85a",
+        "title": "The Turn of the Screw",
+        "author": "Henry James"
+      }
+    },
+    {
+      "id": "test/553c29f5107f526c238c",
+      "type": "Book",
+      "content": {
+        "id": "test/553c29f5107f526c238c",
+        "title": "On Liberty",
+        "author": "John Stuart Mill"
+      }
+    },
+    {
+      "id": "test/44965a95b779190643fc",
+      "type": "Book",
+      "content": {
+        "id": "test/44965a95b779190643fc",
+        "title": "The Souls of Black Folk",
+        "author": "W. E. B. Du Bois"
+      }
+    },
+    {
+      "id": "test/8f82e3534322ec799343",
+      "type": "Book",
+      "content": {
+        "id": "test/8f82e3534322ec799343",
+        "title": "Dubliners",
+        "author": "James Joyce"
+      }
+    },
+    {
+      "id": "test/19504bc6558218f7eb40",
+      "type": "Book",
+      "content": {
+        "id": "test/19504bc6558218f7eb40",
+        "title": "Gulliver's Travels into Several Remote Nations of the World",
+        "author": "Jonathan Swift"
+      }
+    },
+    {
+      "id": "test/d08aa4aefbb0230ad081",
+      "type": "Book",
+      "content": {
+        "id": "test/d08aa4aefbb0230ad081",
+        "title": "Beyond Good and Evil",
+        "author": "Friedrich Wilhelm Nietzsche"
+      }
+    },
+    {
+      "id": "test/bcbb379318f70a82d8ac",
+      "type": "Book",
+      "content": {
+        "id": "test/bcbb379318f70a82d8ac",
+        "title": "The War of the Worlds",
+        "author": "H. G. Wells"
+      }
+    },
+    {
+      "id": "test/28690cb84db86f302ca0",
+      "type": "Book",
+      "content": {
+        "id": "test/28690cb84db86f302ca0",
+        "title": "Peter Pan",
+        "author": "J. M. Barrie"
+      }
+    },
+    {
+      "id": "test/045d4964d73a7db80b05",
+      "type": "Book",
+      "content": {
+        "id": "test/045d4964d73a7db80b05",
+        "title": "Leaves of Grass",
+        "author": "Walt Whitman"
+      }
+    },
+    {
+      "id": "test/733f456c187e6ba16ca7",
+      "type": "Book",
+      "content": {
+        "id": "test/733f456c187e6ba16ca7",
+        "title": "Narrative of the Life of Frederick Douglass, an American Slave",
+        "author": "Frederick Douglass"
+      }
+    },
+    {
+      "id": "test/051aa8e5356ffd102d9d",
+      "type": "Book",
+      "content": {
+        "id": "test/051aa8e5356ffd102d9d",
+        "title": "The Confessions of St. Augustine",
+        "author": "Bishop of Hippo Saint Augustine"
+      }
+    },
+    {
+      "id": "test/f34f35c542d44334d772",
+      "type": "Book",
+      "content": {
+        "id": "test/f34f35c542d44334d772",
+        "title": "The Kama Sutra of Vatsyayana",
+        "author": "Vatsyayana"
+      }
+    },
+    {
+      "id": "test/fbce44e185a3660c6642",
+      "type": "Book",
+      "content": {
+        "id": "test/fbce44e185a3660c6642",
+        "title": "Heart of Darkness",
+        "author": "Joseph Conrad"
+      }
+    },
+    {
+      "id": "test/c7897775241101d3a68c",
+      "type": "Book",
+      "content": {
+        "id": "test/c7897775241101d3a68c",
+        "title": "Calculus Made Easy",
+        "author": "Silvanus P. Thompson"
+      }
+    },
+    {
+      "id": "test/faaac926b64963400080",
+      "type": "Book",
+      "content": {
+        "id": "test/faaac926b64963400080",
+        "title": "The Works of Edgar Allan Poe - Volume 2",
+        "author": "Edgar Allan Poe"
+      }
+    },
+    {
+      "id": "test/acbc1fcf8a6d03ddf908",
+      "type": "Book",
+      "content": {
+        "id": "test/acbc1fcf8a6d03ddf908",
+        "title": "Don Quixote",
+        "author": "Miguel de Cervantes Saavedra"
+      }
+    },
+    {
+      "id": "test/409ae789dad675a61f8c",
+      "type": "Book",
+      "content": {
+        "id": "test/409ae789dad675a61f8c",
+        "title": "Emma",
+        "author": "Jane Austen"
+      }
+    },
+    {
+      "id": "test/d5f1a124562ec36f2cf2",
+      "type": "Book",
+      "content": {
+        "id": "test/d5f1a124562ec36f2cf2",
+        "title": "Leviathan",
+        "author": "Thomas Hobbes"
+      }
+    },
+    {
+      "id": "test/044156c9832094892972",
+      "type": "Book",
+      "content": {
+        "id": "test/044156c9832094892972",
+        "title": "Mosses from an Old Manse, and Other Stories",
+        "author": "Nathaniel Hawthorne"
+      }
+    },
+    {
+      "id": "test/f0ab449f28cdc1fad585",
+      "type": "Book",
+      "content": {
+        "id": "test/f0ab449f28cdc1fad585",
+        "title": "Second Treatise of Government",
+        "author": "John Locke"
+      }
+    },
+    {
+      "id": "test/6badee68f339d8e8b416",
+      "type": "Book",
+      "content": {
+        "id": "test/6badee68f339d8e8b416",
+        "title": "War and Peace",
+        "author": "graf Leo Tolstoy"
+      }
+    },
+    {
+      "id": "test/90f7bbcc5bd2499e2359",
+      "type": "Book",
+      "content": {
+        "id": "test/90f7bbcc5bd2499e2359",
+        "title": "The Strange Case of Dr. Jekyll and Mr. Hyde",
+        "author": "Robert Louis Stevenson"
+      }
+    },
+    {
+      "id": "test/0911f0344997a299e361",
+      "type": "Book",
+      "content": {
+        "id": "test/0911f0344997a299e361",
+        "title": "The Works of Edgar Allan Poe, The Raven Edition",
+        "author": "Edgar Allan Poe"
+      }
+    },
+    {
+      "id": "test/24b8d9288321fafa624e",
+      "type": "Book",
+      "content": {
+        "id": "test/24b8d9288321fafa624e",
+        "title": "The Monkey's Paw",
+        "author": "W. W. Jacobs"
+      }
+    },
+    {
+      "id": "test/790db3d93516facc0ba6",
+      "type": "Book",
+      "content": {
+        "id": "test/790db3d93516facc0ba6",
+        "title": "Democracy in America - Volume 1",
+        "author": "Alexis de Tocqueville"
+      }
+    },
+    {
+      "id": "test/de5773796ad8371d3d26",
+      "type": "Book",
+      "content": {
+        "id": "test/de5773796ad8371d3d26",
+        "title": "The Adventures of Sherlock Holmes",
+        "author": "Arthur Conan Doyle"
+      }
+    },
+    {
+      "id": "test/f14a3d4aa9493452a828",
+      "type": "Book",
+      "content": {
+        "id": "test/f14a3d4aa9493452a828",
+        "title": "Common Sense",
+        "author": "Thomas Paine"
+      }
+    },
+    {
+      "id": "test/f69f233005f15802770f",
+      "type": "Schema",
+      "content": {
+        "identifier": "test/f69f233005f15802770f",
+        "name": "Book",
+        "schema": {
+          "type": "object",
+          "title": "Book",
+          "required": [
+            "id",
+            "title",
+            "author"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "cordra": {
+                "type": {
+                  "autoGeneratedField": "handle"
+                }
+              }
+            },
+            "title": {
+              "type": "string",
+              "cordra": {
+                "preview": {
+                  "showInPreview": true,
+                  "isPrimary": true
+                }
+              }
+            },
+            "author": {
+              "type": "string",
+              "cordra": {
+                "preview": {
+                  "showInPreview": true
+                }
+              }
+            }
+          }
+        },
+        "javascript": ""
+      }
+    },
+    {
+      "id": "test/325ee57503991983f1f7",
+      "type": "Schema",
+      "content": {
+        "identifier": "test/325ee57503991983f1f7",
+        "name": "User",
+        "schema": {
+          "type": "object",
+          "required": [
+            "id",
+            "username",
+            "password"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "cordra": {
+                "type": {
+                  "autoGeneratedField": "handle"
+                }
+              }
+            },
+            "username": {
+              "type": "string",
+              "title": "Username",
+              "cordra": {
+                "preview": {
+                  "showInPreview": true,
+                  "isPrimary": true
+                },
+                "auth": "username"
+              }
+            },
+            "password": {
+              "type": "string",
+              "format": "password",
+              "title": "Password",
+              "cordra": {
+                "auth": "password"
+              }
+            }
+          }
+        },
+        "javascript": ""
+      }
+    }
+  ]
+}

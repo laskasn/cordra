@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_3.dtd">
+
+<!-- =============================================================== -->
+<!-- Configure the Jetty Request Log                                 -->
+<!-- =============================================================== -->
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+
+  <!-- =========================================================== -->
+  <!-- Configure Request Log for Server                            -->
+  <!-- (Use RequestLogHandler for a context specific RequestLog    -->
+  <!-- =========================================================== -->
+  <Set name="RequestLog">
+    <New id="RequestLog" class="org.eclipse.jetty.server.AsyncNCSARequestLog">
+      <Set name="filename"><SystemProperty name="cordra.data"/>/logs/jetty-request.log-yyyy_MM_dd</Set>
+      <Set name="filenameDateFormat">yyyyMM</Set>
+      <Set name="retainDays">0</Set>
+      <Set name="append">true</Set>
+      <Set name="extended">false</Set>
+      <Set name="logCookies">false</Set>
+      <Set name="LogTimeZone">GMT</Set>
+      <Set name="LogLatency">false</Set>
+    </New>
+  </Set>
+</Configure>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration>
+    <Appenders>
+        <Console name="console" target="SYSTEM_ERR">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSSZ} [%thread] %-5level %logger{36} - %m%n</Pattern>
+            </PatternLayout>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="org.eclipse.jetty.annotations.AnnotationParser" level="error"/>
+        <Logger name="com.amazonaws.services.s3.AmazonS3Client" level="error"/>
+        <Logger name="org.apache.kafka" level="warn"/>
+
+        <Root level="info"><AppenderRef ref="console"/></Root>
+    </Loggers>
+</Configuration>

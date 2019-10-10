@@ -1,0 +1,157 @@
+apply plugin: 'maven'
+
+plugins.withId('java') {
+    //// reload all snapshots
+    //configurations.all { resolutionStrategy { cacheChangingModulesFor 0, 'seconds' } }
+
+    //// see Java warnings
+    //compileJava { options.compilerArgs += [ '-Xlint:unchecked', '-Xlint:deprecation' ] }
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    if (JavaVersion.current().isJava9Compatible()) {
+        compileJava {
+            options.compilerArgs.addAll(['--release', '8'])
+        }
+    }
+
+    // remove Gradle 4 warnings
+    compileJava {
+        options.compilerArgs += '-proc:none'
+    }
+
+    defaultTasks 'clean', 'jar'
+    compileJava.mustRunAfter clean
+    jar.dependsOn clean
+
+    plugins.withId('war') {
+        defaultTasks 'clean', 'war'
+        war.dependsOn clean
+
+        jar {
+            classifier 'classes'
+        }
+        artifacts {
+            archives jar
+        }
+    }
+}
+
+def repoBaseUri = project.ext.properties.repoBaseUri
+if (repoBaseUri && !repoBaseUri.endsWith('/')) repoBaseUri = repoBaseUri + '/'
+def mavenUser = project.ext.properties.mavenUser
+def mavenPassword = project.ext.properties.mavenPassword
+
+repositories {
+    if (repoBaseUri) {
+        maven {
+            url repoBaseUri + 'releases'
+            credentials {
+                username mavenUser
+                password mavenPassword
+            }
+        }
+        maven {
+            url repoBaseUri + 'snapshots'
+            credentials {
+                username mavenUser
+                password mavenPassword
+            }
+        }
+        maven {
+            url repoBaseUri + 'mirror'
+            credentials {
+                username mavenUser
+                password mavenPassword
+            }
+        }
+    } else {
+        maven {
+            url "file://${rootProject.projectDir}/cnri-libs"
+        }
+        flatDir {
+            dirs 'lib', '.', 'WEB-INF/lib'
+        }
+        jcenter()
+    }
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'commons-logging' && details.requested.name == 'commons-logging') {
+            details.useTarget group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.28'
+        } else if (details.requested.group == 'commons-logging' && details.requested.name == 'commons-logging-api') {
+            details.useTarget group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.28'
+        } else if (details.requested.group == 'log4j' && details.requested.name == 'log4j') {
+            details.useTarget group: 'org.slf4j', name: 'log4j-over-slf4j', version: '1.7.28'
+        } else if (details.requested.group == 'org.slf4j' && details.requested.name == 'slf4j-log4j12') {
+            details.useTarget group: 'org.slf4j', name: 'log4j-over-slf4j', version: '1.7.28'
+        }
+    }
+}
+
+project.ext.populateConfigurationWithMavenArtifacts = { name, test ->
+    configurations.each { config ->
+        if (config.name == name) return
+        if (!config.canBeResolved) return
+        if (config.name != 'testCompileClasspath' && config.name != 'testRuntimeClasspath' &&
+            config.dependencies.findAll(test).isEmpty()) return
+        config.resolvedConfiguration.resolvedArtifacts.each { artifact ->
+            def dep = artifact.moduleVersion.id
+            if (test(dep)) {
+                project.dependencies.add(name, [ group: dep.group, name: dep.name, version: dep.version, classifier: artifact.classifier, ext: artifact.extension ], { transitive = false})
+                project.dependencies.add(name, [ group: dep.group, name: dep.name, version: dep.version, ext: 'pom' ], { transitive = false })
+                if (artifact.extension == 'jar' || artifact.extension == 'war') {
+                    project.dependencies.add(name, [ group: dep.group, name: dep.name, version: dep.version, classifier: 'sources' ], { transitive = false })
+                }
+            }
+        }
+    }
+}
+
+project.ext.configurationToMavenRepository = { name, path ->
+    copySpec {
+        configurations[name].resolvedConfiguration.resolvedArtifacts.collect { artifact ->
+            def dep = artifact.moduleVersion.id
+            from(artifact.file) {
+                into(path + "/" + dep.group.replace(".","/") + "/" + dep.name + "/" + dep.version)
+            }
+        }
+    }
+}
+
+plugins.withId('java') {
+    tasks.withType(Javadoc) {
+        // turn off Javadoc linting
+        options.addStringOption('Xdoclint:none', '-quiet')
+        if (JavaVersion.current().isJava9Compatible()) {
+            options.addBooleanOption('html5', true)
+        }
+    }
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
+    }
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: repoBaseUri + "releases") {
+            authentication(userName: mavenUser, password: mavenPassword)
+        }
+        snapshotRepository(url: repoBaseUri + "snapshots") {
+            authentication(userName: mavenUser, password: mavenPassword)
+        }
+    }
+}

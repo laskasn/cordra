@@ -1,0 +1,222 @@
+{
+  "results": [
+    {
+      "id": "test/eb91eb599520927f9c8e",
+      "type": "Paper",
+      "content": {
+        "title": "Forecast constraints on f(T) gravity with gravitational waves from compact binary coalescences",
+        "abstract": "The direct detection of gravitational waves (GWs) opened a new chapter in the modern cosmology\nto probe possible deviations from the general relativity (GR) theory. In the present work, we\ninvestigate the modified GW form propagation from the inspiraling of compact binary systems\nwithin the context of f(T) gravity in order to obtain new forecasts/constraints on the free parameter\nof the theory. First, we show that the modified waveform differs from the GR waveform essentially\ndue to induced corrections on the GW amplitude. Then, we discuss the forecasts on the f(T)\ngravity assuming simulated sources of GWs as black hole binaries, neutron star binaries and black\nhole - neutron star binary systems, which emit GWs in the frequency band of the Advanced LIGO\n(aLIGO) interferometer and of the third generation Einstein Telescope (ET). We show that GWs\nsources detected within the aLIGO sensitivity can return estimates of the same order of magnitude\nof the current cosmological observations. On the other hand, detections within the ET sensitivity\ncan improve by up to 2 orders of magnitude the current bound on the f(T) gravity. Therefore, the\nstatistical accuracy that can be achieved by future ground based GW observations, mainly with the\nET detector (and planed detectors with a similar sensitivity), can allow strong bounds on the free\nparameter of the theory, and can be decisive to test the theory of gravitation.",
+        "authors": [
+          "Rafael C. Nunes",
+          "Marcio E. S. Alves",
+          "Jose C. N. de Araujo"
+        ],
+        "publishedBy": "arXiv",
+        "language": "English",
+        "topics": [
+          "General Relativity and Quantum Cosmology",
+          "Cosmology and Nongalactic Astrophysics",
+          "High Energy Physics - Phenomenology "
+        ]
+      }
+    },
+    {
+      "id": "test/84a0ccb5f473c6554017",
+      "type": "Paper",
+      "content": {
+        "title": "On the primordial specific frequency of globular clusters in dwarf and giant elliptical galaxies",
+        "abstract": "Globular clusters (GC) are important objects for tracing the early evolution of a galaxy. We study the relation between the properties of globular cluster systems - as quantified by the GC specific frequency (SN) - and the properties of their host galaxies. In order to understand the origin of the relation between the GC specific frequency (SN) and galaxy mass, we devise a theoretical model for the specific frequency (SN,th). GC erosion is considered to be an important aspect for shaping this relation, since observations show that galaxies with low densities have a higher SN, while high density galaxies have a small SN. We construct a model based on the hypothesis that star-formation is clustered and depends on the minimum embedded star cluster mass (Mecl,min), the slope of the power-law embedded cluster mass function (beta) and the relation between the star formation rate (SFR) and the maximum star cluster mass (Mecl,max). We find an agreement between the primordial value of the specific frequency (SNi) and our model for beta between 1.5 and 2.5.",
+        "authors": [
+          "Ahmed H. Abdullah",
+          "Pavel Kroupa",
+          "Patrick Lieberz",
+          "Rosa Amelia Gonzalez-Lopezlira"
+        ],
+        "publishedBy": "arXiv",
+        "language": "English",
+        "topics": [
+          "Astrophysics of Galaxies"
+        ],
+        "publicationDate": "2019-07-05T00:00:00"
+      }
+    },
+    {
+      "id": "test/b8ff3377ace95efc97c7",
+      "type": "Book",
+      "content": {
+        "title": "Grendel",
+        "authors": [
+          "John Gardner"
+        ],
+        "genre": [
+          "European mythology",
+          "Fantasy novel",
+          "Postmodern literature"
+        ],
+        "publishedBy": "Alfred A. Knopf",
+        "publicationDate": "1971-01-01T00:00:00",
+        "language": "English"
+      }
+    },
+    {
+      "id": "test/1ebbed981470f99dc941",
+      "type": "Book",
+      "content": {
+        "title": "Crime and Punishment",
+        "authors": [
+          "Fyodor Dostoevsky"
+        ],
+        "genre": [
+          "psychological fiction"
+        ],
+        "publishedBy": "The Russian Messenger",
+        "publicationDate": "1866-01-01T00:00:00",
+        "language": "Russian"
+      }
+    },
+    {
+      "id": "test/d0ee345e31f83883d76b",
+      "type": "Book",
+      "content": {
+        "title": "Nineteen Eighty-Four",
+        "authors": [
+          "George Orwell"
+        ],
+        "genre": [
+          "social science fiction",
+          "political fiction",
+          "Dystopian"
+        ],
+        "publishedBy": "Secker & Warburg",
+        "publicationDate": "1949-01-01T00:00:00",
+        "language": "English"
+      }
+    },
+    {
+      "id": "test/1cab9f6d98cea5ceaa5a",
+      "type": "Paper",
+      "content": {
+        "title": "Using large scale structure data and a halo model to constrain Generalised Dark Matter",
+        "abstract": "Constraints on the properties of the cosmological dark matter have previously been obtained in a\nmodel-independent fashion using the Generalised Dark Matter (GDM) framework. Here we extend\nthat work in several directions: We consider the inclusion of WiggleZ matter power spectrum data,\nand show that this improves the constraints on the two perturbative GDM parameters, c\n2\ns and c\n2\nvis,\nby a factor of 3, for a conservative choice of wavenumber range. A less conservative choice can\nyield an improvement of up to an order of magnitude compared to previous constraints. In order\nto examine the robustness of this result we develop a GDM halo model to explore how non-linear\nstructure formation could proceed in this framework, since currently GDM has only been defined\nperturbatively and only linear theory has been used when generating constraints. We then examine\nhow the halo model affects the constraints obtained from the matter power spectrum data. The\nless-conservative wavenumber range shows a significant difference between linear and non-linear\nmodelling, with the latter favouring GDM parameters inconsistent with ΛCDM, underlining the\nimportance of careful non-linear modelling when using this data. We also use this halo model to\nestablish the robustness of previously obtained constraints, particularly those that involve weak\ngravitational lensing of the cosmic microwave background. Additionally, we show how the inclusion\nof neutrino mass as a free parameter affects previous constraints on the GDM parameters.",
+        "authors": [
+          "Daniel B Thomas",
+          "Michael Kopp",
+          "Katarina Markovic"
+        ],
+        "publishedBy": "arXiv",
+        "language": "English",
+        "topics": [
+          "Cosmology and Nongalactic Astrophysics",
+          "General Relativity and Quantum Cosmology"
+        ]
+      }
+    },
+    {
+      "id": "test/f69f233005f15802770f",
+      "type": "Schema",
+      "content": {
+        "identifier": "test/f69f233005f15802770f",
+        "name": "Book",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "title": "Title",
+              "cordra": {
+                "preview": {
+                  "showInPreview": true,
+                  "isPrimary": true
+                }
+              }
+            },
+            "authors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "genre": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "publishedBy": {
+              "type": "string"
+            },
+            "publicationDate": {
+              "type": "string"
+            },
+            "language": {
+              "type": "string"
+            }
+          }
+        },
+        "javascript": "var oaiUtil = require(\"/cordra/schemas/OaiUtil\");\n\nexports.methods = {};\nexports.methods.getAsDublinCoreJson = getAsDublinCoreJson;\nexports.methods.getAsXml = getAsXml;\n\nexports.staticMethods = {};\nexports.staticMethods.listMetadataFormats = listMetadataFormats;\n\nfunction listMetadataFormats() {\n    return [\n        {\n            \"metadataPrefix\" : \"oai_dc\",\n            \"schema\" : \"http://www.openarchives.org/OAI/2.0/oai_dc.xsd\",\n            \"metadataNamespace\" : \"http://www.openarchives.org/OAI/2.0/oai_dc/\"\n        }, \n        {\n            \"metadataPrefix\" : \"oai_custom_1\"\n        }\n    ];\n}\n\nfunction getAsXml(cordraObject, context) {\n    var format = context.params.format;\n    if (\"oai_custom_1\" !== format) throw \"Format not supported\"; \n    var book = cordraObject.content;\n    var xml = oaiUtil.toXml(\"book\", book);\n    return xml;\n}\n\nfunction getAsDublinCoreJson(cordraObject, context) {\n    var map = {\n        \"subject\" : \"/genre\",\n        \"creator\" : \"/authors\",\n        \"publisher\" : \"/publishedBy\",\n        \"language\" : \"/language\",\n        \"date\" : \"/publicationDate\"\n    };\n    var metadata = oaiUtil.mapTo(cordraObject, map);\n    return metadata;\n}\n"
+      }
+    },
+    {
+      "id": "test/e87d5ccbc2571c4b466f",
+      "type": "Schema",
+      "content": {
+        "identifier": "test/e87d5ccbc2571c4b466f",
+        "name": "OaiUtil",
+        "schema": {
+          "type": "object",
+          "properties": {}
+        },
+        "javascript": "exports.toXml = toXml;\nexports.mapTo = mapTo;\nexports.escapeXml = escapeXml;\n\nfunction escapeXml(unsafe) {\n    return unsafe.replace(/[<>&'\"]/g, function (c) {\n        switch (c) {\n            case '<': return '&lt;';\n            case '>': return '&gt;';\n            case '&': return '&amp;';\n            case '\\'': return '&apos;';\n            case '\"': return '&quot;';\n        }\n    });\n}\n\nfunction toXml(name, value) {\n    var xml = \"\";\n    if (value instanceof Array) {\n        xml += arrayToXml(name, value);\n    } else if (typeof value === 'object') {\n        xml += jsonObjectToXml(name, value);\n    } else {\n        xml += propertyToXml(name, value);\n    }\n    return xml;\n}\n\nfunction jsonObjectToXml(name, json) {\n    var xml = '<'+name+'>';\n    var keys = Object.keys(json);\n    for (var i = 0; i < keys.length; i++) {\n        var key = keys[i];\n        var value = json[key];\n        if (value !== null) {\n            xml += toXml(key, value); \n        }\n    }\n    xml += '</'+name+'>';\n    return xml;\n}\n\nfunction arrayToXml(name, array) {\n    var xml = '<'+name+'>';\n    for (var i = 0; i < array.length; i++) {\n        var value = array[i];\n        if (value !== null) {\n            var itemName = arrayItemName(name);\n            xml += toXml(itemName, value);\n        }\n    }\n    xml += '</'+name+'>';\n    return xml;\n}\n\nfunction arrayItemName(arrayName) {\n    if (arrayName.endsWith(\"s\")) {\n        return arrayName.substring(0, arrayName.length-1);\n    }\n}\n\nfunction propertyToXml(name, value) {\n    var xml = '<'+name+'>'+escapeXml(value)+'</'+name+'>';\n    return xml;\n}\n\nfunction mapTo(cordraObject, map) {\n    var metadata = {};\n    for (var oaiProp in map) {\n        var source = map[oaiProp];\n         if (Array.isArray(source)) {\n            var values = valuesForPointers(cordraObject, source);\n            if (values) {\n                metadata[oaiProp] = values;\n            } \n        } else {\n            var value = valueForPointer(cordraObject, source);\n            if (value) {\n                metadata[oaiProp] = value;\n            }\n        }\n    }\n    return metadata;\n}\n\nfunction valuesForPointers(cordraObject, pointers) {\n    var result = [];\n    for (var i = 0; i < pointers.length; i++) {\n        var value = valueForPointer(cordraObject, pointers[i]);\n        if (Array.isArray(value)) {\n            for (var k = 0; k < value.length; k++) {\n                result.push(value[k]);\n            }\n        } else {\n            result.push(value);\n        }\n    }\n    return result;\n}\n\nfunction valueForPointer(cordraObject, pointer) {\n    var propNames = pointer.split(\"/\");\n    var target = cordraObject.content;\n    for (var i = 0; i < propNames.length; i++) {\n        if (\"\" === propNames[i]) {\n            continue;\n        }\n        target = target[propNames[i]];\n    }\n    return target;\n}"
+      }
+    },
+    {
+      "id": "test/22d507f2ba74e43593de",
+      "type": "Schema",
+      "content": {
+        "identifier": "test/22d507f2ba74e43593de",
+        "name": "Paper",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "title": "Name",
+              "cordra": {
+                "preview": {
+                  "showInPreview": true,
+                  "isPrimary": true
+                }
+              }
+            },
+            "abstract": {
+              "type": "string",
+              "format": "textarea"
+            },
+            "authors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "publishedBy": {
+              "type": "string"
+            },
+            "language": {
+              "type": "string"
+            },
+            "topics": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "publicationDate": {
+              "type": "string"
+            }
+          }
+        },
+        "javascript": "exports.methods = {};\nexports.methods.getAsDublinCoreJson = getAsDublinCoreJson;\nexports.methods.getAsXml = getAsXml;\n\nexports.staticMethods = {};\nexports.staticMethods.listMetadataFormats = listMetadataFormats;\n\nfunction listMetadataFormats() {\n    return [\n        {\n            \"metadataPrefix\" : \"oai_dc\",\n            \"schema\" : \"http://www.openarchives.org/OAI/2.0/oai_dc.xsd\",\n            \"metadataNamespace\" : \"http://www.openarchives.org/OAI/2.0/oai_dc/\"\n        }\n    ];\n}\n\nfunction getAsXml(cordraObject, context) {\n    var format = context.params.format;\n    if (\"oai_custom_1\" !== format) throw \"Format not supported\"; \n    var paper = cordraObject.content;\n    var xml = '<paper>';\n    xml += '<identifier>'+ cordraObject.id +'</identifier>';\n    if (paper.title) {\n        xml += '<title>'+paper.title+'</title>';\n    }\n    if (paper.abstract) {\n        xml += '<abstract>'+paper.abstract+'</abstract>';\n    }\n    if (paper.topics) {\n        xml += '<topics>';\n        for (var t = 0; t < paper.topics.length; t++) {\n            xml += '<topic>'+paper.topics[t]+'</topic>';\n        }\n        xml += '</topics>';\n    }\n    if (paper.authors) {\n        xml += '<authors>';\n        for (var i = 0; i < paper.authors.length; i++) {\n            xml += '<author>'+paper.authors[i]+'</author>';\n        }\n        xml += '</authors>';\n    }\n    if (paper.publishedBy) {\n        xml += '<publisher>'+paper.publishedBy+'</publisher>';\n    }\n    if (paper.language) {\n        xml += '<language>'+paper.language+'</language>';\n    }\n    if (paper.publicationDate) {\n        var date = new Date(paper.publicationDate);\n        xml += '<date>'+date.getUTCFullYear()+'</date>';\n    }\n    xml += \"</paper>\";\n    return xml;\n}\n\nfunction getAsDublinCoreJson(cordraObject, context) {\n    var paper = cordraObject.content;\n    var metadata = {};\n    metadata.identifier = cordraObject.id;\n    if (paper.title) {\n        metadata.title = paper.title;\n    }\n    if (paper.abstract) {\n        metadata.subjects = [];\n        metadata.subjects.push(paper.abstract);\n    }\n    if (paper.authors && paper.authors.length > 0) {\n        metadata.creators = paper.authors;\n    }\n    if (paper.publishedBy) {\n        metadata.publisher = paper.publishedBy;\n    }\n    if (paper.language) {\n        metadata.language = paper.language;\n    }\n    if (paper.topics && paper.topics.length > 0) {\n        if (!metadata.subjects) {\n            metadata.subjects = [];\n        }\n        for (var i = 0; i < paper.topics.length; i++) {\n            metadata.subjects.push(paper.topics[i]);\n        }\n    }\n    if (paper.publicationDate) {\n        var date = new Date(paper.publicationDate);\n        metadata.date = date.getUTCFullYear();\n    }\n    return metadata;\n}"
+      }
+    }
+  ]
+}

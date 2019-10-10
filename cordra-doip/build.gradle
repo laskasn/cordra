@@ -1,0 +1,16 @@
+apply plugin: 'java-library'
+
+group = 'net.cnri.cordra'
+archivesBaseName = 'cordra-doip'
+version = rootProject.version
+
+dependencies {
+    api 'com.google.code.gson:gson:2.8.5'
+    api 'net.dona.doip:doip-sdk:2.1.0'
+    api project(':cordra-client')
+
+    implementation 'org.slf4j:slf4j-api:1.7.28'
+
+    testCompile 'junit:junit:4.12'
+    testRuntime 'org.slf4j:slf4j-simple:1.7.28'
+}

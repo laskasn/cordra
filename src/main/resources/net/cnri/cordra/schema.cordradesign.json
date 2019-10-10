@@ -1,0 +1,311 @@
+{
+  "type": "object",
+  "title": "CordraDesign",
+  "properties": {
+    "ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }      
+    },
+    "useLegacyContentOnlyJavaScriptHooks": {
+      "type": "boolean"
+    },
+    "useLegacySearchPageSizeZeroReturnsAll": {
+      "type": "boolean"
+    },
+    "useLegacySessionsApi": {
+      "type": "boolean"
+    },
+    "allowInsecureAuthentication": {
+      "type": "boolean"
+    },
+    "disableAuthenticationBackOff": {
+      "type": "boolean"
+    },
+    "enableVersionEdits": {
+      "type": "boolean"
+    },
+    "includePayloadsInReplicationMessages": {
+      "type": "boolean"
+    },
+    "uiConfig": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "relationshipsButtonText": {
+          "type": "string"
+        },
+        "allowUserToSpecifySuffixOnCreate": {
+          "type": "boolean"
+        },
+        "allowUserToSpecifyHandleOnCreate": {
+          "type": "boolean"
+        },
+        "hideTypeInObjectEditor": {
+          "type": "boolean"
+        },
+        "searchResults": {
+          "type": "object",
+          "properties": {
+            "includeType": {
+              "type": "boolean"
+            },
+            "includeModifiedDate": {
+              "type": "boolean"
+            },
+            "includeCreatedDate": {
+              "type": "boolean"
+            }
+          }
+        },
+        "initialQuery": {
+          "type": "string"
+        },
+        "initialFragment": {
+          "type": "string"
+        },
+        "initialSortFields": {
+          "type": "string"
+        },
+        "initialFilter": {
+          "type": "string"
+        },
+        "navBarLinks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "url",
+                  "query",
+                  "typeDropdown"
+                ]
+              },
+              "title": {
+                "type": "string"
+              },
+              "query": {
+                "type": "string"
+              },
+              "sortFields": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "authConfig": {
+      "type": "object",
+      "properties": {
+        "schemaAcls": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "defaultAclRead": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "defaultAclWrite": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "aclCreate": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "defaultAcls": {
+          "type": "object",
+          "properties": {
+            "defaultAclRead": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "defaultAclWrite": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "aclCreate": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "handleServerConfig": {
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "listenAddress": {
+          "type": "string"
+        },
+        "tcpPort": {
+          "type": "number"
+        },
+        "externalAddress": {
+          "type": "string"
+        },
+        "externalTcpPort": {
+          "type": "number"
+        },
+        "logAccesses": {
+          "type": "boolean"
+        }
+      }
+    },
+    "handleMintingConfig": {
+      "type": "object",
+      "properties": {
+        "prefix": {
+          "type": "string"
+        },
+        "baseUri": {
+          "type": "string"
+        },
+        "schemaSpecificLinks": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "ui",
+                    "json"
+                  ]
+                },
+                "primary": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "handleAdminIdentity": {
+          "type": "string"
+        },
+        "javascript": {
+          "type": "string",
+          "format": "javascript"
+        },
+        "defaultLinks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "ui",
+                  "json",
+                  "payload",
+                  "url"
+                ]
+              },
+              "primary": {
+                "type": "boolean"
+              },
+              "specific": {
+                "description": "payload name or jsonPointer for url",
+                "type": "string"
+              },
+              "all": {
+                "description": "only for type payload. Indicates that a link should be created for all payloads",
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "ignoreHandleErrors": {
+          "type": "boolean"
+        }
+      }
+    },
+    "doip": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "listenAddress": { 
+          "type": "string" 
+        },
+        "port": {
+          "type": "number"
+        },
+        "processorConfig": {
+          "type": "object",
+          "properties": {
+            "serviceId": {
+              "type": "string"
+            },
+            "listenAddress": { 
+              "type": "string" 
+            },
+            "port": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "javascript": {
+      "type": "string",
+      "format": "javascript",
+      "title": "JavaScript"
+    },
+    "cookies": {
+        "type": "object",
+        "properties": {
+            "csrfToken": {
+               "$ref": "#/definitions/cookie"
+            },
+            "jessionid": {
+               "$ref": "#/definitions/cookie"
+            }
+        }
+    }
+  },
+  "definitions": {
+      "cookie": {
+          "type": "object",
+          "properties": {
+              "path": { "type": "string" },
+              "httpOnly": { "type": "boolean" },
+              "secure": { "type": "boolean" }
+          }
+      }
+  }
+}

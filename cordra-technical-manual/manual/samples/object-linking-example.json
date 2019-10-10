@@ -1,0 +1,201 @@
+{
+  "results": [
+    {
+      "id": "test/othello",
+      "type": "Book",
+      "content": {
+        "id": "test/othello",
+        "title": "Othello",
+        "author": "William Shakespeare"
+      },
+      "metadata": {
+        "hashes": {
+          "alg": "SHA-256",
+          "content": "049396663f31294615ca155f95f59d801051c41d476c9a699ed2df4a460c1ab0",
+          "full": "60e7d4998d3bd9ae571c805a03a89e6273bb18883152a1f99a409b65750efacd"
+        }
+      }
+    },
+    {
+      "id": "test/hamlet",
+      "type": "Book",
+      "content": {
+        "id": "test/hamlet",
+        "title": "Hamlet",
+        "author": "William Shakespeare"
+      },
+      "metadata": {
+        "hashes": {
+          "alg": "SHA-256",
+          "content": "dba0f8e31030b8fd924ece65c921933bf083025ecf0bad9d3450d4e7aea0aa40",
+          "full": "f4a9a2eb4b0b81dfa227fd80c4e824ad5966d789e23daf7054bd03eed8e37b22"
+        }
+      }
+    },
+    {
+      "id": "test/macbeth",
+      "type": "Book",
+      "content": {
+        "id": "test/macbeth",
+        "title": "Macbeth",
+        "author": "William Shakespeare"
+      },
+      "metadata": {
+        "hashes": {
+          "alg": "SHA-256",
+          "content": "1435500b7c367fd550360c65e6b1a181475472287cbd08a11d93fbd254667846",
+          "full": "ef8491742fe830636b952e457f168b38f61440bdd9ff8b473765e1114721d63d"
+        }
+      }
+    },
+    {
+      "id": "test/first-block",
+      "type": "Block",
+      "content": {
+        "pointers": [
+          {
+            "id": "test/hamlet",
+            "hash": "f4a9a2eb4b0b81dfa227fd80c4e824ad5966d789e23daf7054bd03eed8e37b22"
+          },
+          {
+            "id": "test/macbeth",
+            "hash": "ef8491742fe830636b952e457f168b38f61440bdd9ff8b473765e1114721d63d"
+          }
+        ]
+      },
+      "metadata": {
+        "hashes": {
+          "alg": "SHA-256",
+          "content": "705c6e8df77c08749a02466f40b75ca3ca4768c96ca6362fd862a116a62d3d66",
+          "full": "c6ff828bc74b5d5ac25b7640dbf3c28d83f6db3643fe6441c5732f0765480518"
+        }
+      }
+    },
+    {
+      "id": "test/second-block",
+      "type": "Block",
+      "content": {
+        "previousBlock": {
+          "id": "test/first-block",
+          "hash": "c6ff828bc74b5d5ac25b7640dbf3c28d83f6db3643fe6441c5732f0765480518"
+        },
+        "pointers": [
+          {
+            "id": "test/othello",
+            "hash": "60e7d4998d3bd9ae571c805a03a89e6273bb18883152a1f99a409b65750efacd"
+          }
+        ]
+      },
+      "metadata": {
+        "hashes": {
+          "alg": "SHA-256",
+          "content": "ad50778cd9bd0ff72681ef00980b65922756a6133b5bc365441d94a7bf50a5df",
+          "full": "1c91dae6ad73281ac0c0ca558f644dd3aefe6b97956f9eeee640c212ee2db0aa"
+        }
+      }
+    },
+    {
+      "id": "test/82dd2cdf36f9436d89f4",
+      "type": "Schema",
+      "content": {
+        "identifier": "test/82dd2cdf36f9436d89f4",
+        "name": "Block",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "previousBlock": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "cordra": {
+                    "type": {
+                      "handleReference": {
+                        "types": [
+                          "Block"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "hash": {
+                  "type": "string"
+                }
+              }
+            },
+            "pointers": {
+              "type": "array",
+              "format": "table",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "cordra": {
+                      "type": {
+                        "handleReference": {
+                          "types": []
+                        }
+                      }
+                    }
+                  },
+                  "hash": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "description": {
+              "type": "string"
+            }
+          }
+        },
+        "javascript": "var cordra = require('cordra');\nvar cordraUtil = require('cordraUtil');\n\nexports.methods = {};\nexports.methods.verifyChain = verifyChain;\n\nfunction verifyChain(block, context) {\n    var report = cordraUtil.verifyHashes(block);\n    if (!report.full) {\n        throw \"The hashes on this object \" + block.id + \" do not verify\";\n    }\n    if (block.content.pointers) {\n        for (var i = 0; i < block.content.pointers.length; i++) {\n            var pointer = block.content.pointers[i];\n            var pointedAt = cordra.get(pointer.id, true);\n            if (pointedAt === null) {\n                throw \"The object \" + pointer.id + \" pointed at by \" + block.id + \" is missing\";\n            }\n            var pointedAtReport = cordraUtil.verifyHashes(pointedAt);\n            if (!pointedAtReport.full) {\n                throw \"The hash on the pointed at object \" + pointer.id + \" is invalid\";\n            }\n            if (pointer.hash !== pointedAt.metadata.hashes.full) {\n                throw \"The full hash of pointed at object \" + pointer.id + \" does not match the hash stored in this block\";\n            }\n        }\n    }\n    if (block.content.previousBlock) {\n        var previousBlock = cordra.get(block.content.previousBlock.id, true);\n        if (previousBlock === null) {\n            throw \"Previous block \" + block.content.previousBlock.id + \" referenced by \" + block.id + \" is missing\";\n        }\n        var previousBlockReport = cordraUtil.verifyHashes(previousBlock);\n        if (!previousBlockReport.full) {\n            throw \"The hash on the previous block \" + previousBlock.id + \" is invalid\";\n        }\n        if (block.content.previousBlock.hash !== previousBlock.metadata.hashes.full) {\n            throw \"The full hash of previous block \" + previousBlock.id + \" does not match the hash stored in this block\";\n        }\n        return verifyChain(previousBlock, context);\n    } else {\n        return true;\n    }\n}",
+        "hashObject": true
+      }
+    },
+    {
+      "id": "test/f69f233005f15802770f",
+      "type": "Schema",
+      "content": {
+        "identifier": "test/f69f233005f15802770f",
+        "name": "Book",
+        "schema": {
+          "type": "object",
+          "required": [
+            "id",
+            "title"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "cordra": {
+                "type": {
+                  "autoGeneratedField": "handle"
+                }
+              }
+            },
+            "title": {
+              "type": "string",
+              "cordra": {
+                "preview": {
+                  "showInPreview": true,
+                  "isPrimary": true
+                }
+              }
+            },
+            "author": {
+              "type": "string",
+              "cordra": {
+                "preview": {
+                  "showInPreview": true
+                }
+              }
+            }
+          }
+        },
+        "hashObject": true
+      }
+    }
+  ]
+}

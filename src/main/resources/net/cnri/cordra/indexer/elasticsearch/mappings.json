@@ -1,0 +1,112 @@
+{
+  "date_detection": false,
+  "dynamic_templates": [
+    {
+      "sortable_path": {
+        "path_match": "sort_*.*",
+        "match_mapping_type": "string",
+        "mapping": {
+          "type": "keyword",
+          "normalizer": "lowercase",
+          "norms": false,
+          "ignore_above": 1024
+        }
+      }
+    },
+    {
+      "sortable_other": {
+        "match": "sort_*",
+        "match_mapping_type": "string",
+        "mapping": {
+          "type": "keyword",
+          "normalizer": "lowercase",
+          "norms": false,
+          "ignore_above": 1024
+        }
+      }
+    },
+    {
+      "all": {
+        "match": "*",
+        "match_mapping_type": "string",
+        "mapping": {
+          "type": "text"
+        }
+      }
+    }
+  ],
+  "properties": {
+    "txnId": {
+      "type": "long"
+    },
+    "_version_": {
+      "type": "long"
+    },
+    "repoid": {
+      "type": "keyword",
+      "normalizer": "lowercase"
+    },
+    "type": {
+      "type": "keyword",
+      "normalizer": "lowercase",
+      "fields": {
+          "raw": {
+              "type": "keyword",
+              "store": true
+          }
+      }
+    },
+    "aclRead": {
+      "type": "keyword",
+      "normalizer": "lowercase"
+    },
+    "aclWrite": {
+      "type": "keyword",
+      "normalizer": "lowercase"
+    },
+    "createdBy": {
+      "type": "keyword",
+      "normalizer": "lowercase"
+    },
+    "remoteRepository": {
+      "type": "keyword",
+      "normalizer": "lowercase"
+    },
+    "username": {
+      "type": "keyword",
+      "normalizer": "lowercase"
+    },
+    "users": {
+      "type": "keyword",
+      "normalizer": "lowercase"
+    },
+    "schemaName": {
+      "type": "keyword",
+      "normalizer": "lowercase"
+    },
+    "javaScriptModuleName": {
+      "type": "keyword",
+      "normalizer": "lowercase"
+    },
+    "internal.pointsAt": {
+      "type": "keyword",
+      "normalizer": "lowercase"
+    },
+    "isVersion": {
+      "type": "keyword",
+      "normalizer": "lowercase"
+    },
+    "versionOf": {
+      "type": "keyword",
+      "normalizer": "lowercase"
+    },
+    "payloadIndexState": {
+      "type": "keyword",
+      "normalizer": "lowercase"
+    },
+    "payloadIndexCordraServiceId": {
+      "type": "keyword",
+      "normalizer": "lowercase"
+    }
+  }
+}

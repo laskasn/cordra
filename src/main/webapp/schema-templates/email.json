@@ -1,0 +1,95 @@
+{
+  "type": "object",
+  "title": "Email",
+  "properties": {
+    "date": {
+      "type": "string",
+      "title": "Date",
+      "format": "date",
+      "cordra": {
+        "preview": {
+          "showInPreview": true
+        }
+      }
+    },
+    "subject": {
+      "type": "string",
+      "title": "Subject",
+      "cordra": {
+        "preview": {
+          "showInPreview": true,
+          "isPrimary": true
+        }
+      }
+    },
+    "from": {
+      "type": "string",
+      "title": "From",
+      "cordra": {
+        "preview": {
+          "showInPreview": true
+        }
+      }
+    },
+    "to": {
+      "type": "array",
+      "title": "To",
+      "items": {
+        "type": "string"
+      }
+    },
+    "bcc": {
+      "type": "array",
+      "title": "Bcc",
+      "items": {
+        "type": "string"
+      }
+    },
+    "cc": {
+      "type": "array",
+      "title": "Cc",
+      "items": {
+        "type": "string"
+      }
+    },
+    "message-id": {
+      "type": "string",
+      "title": "Message-ID"
+    },
+    "in-reply-to": {
+      "type": "string",
+      "title": "In-Reply-To"
+    },
+    "reply-to": {
+      "type": "string",
+      "title": "Reply-To"
+    },
+    "sender": {
+      "type": "string",
+      "title": "Sender"
+    },
+    "content-type": {
+      "type": "string",
+      "title": "Content-Type"
+    },
+    "precedence": {
+      "type": "string",
+      "title": "Precedence"
+    },
+    "references": {
+      "type": "string",
+      "title": "References"
+    },
+    "body": {
+      "type": "string",
+      "format": "textarea",
+      "title": "Body",
+      "cordra": {
+        "preview": {
+          "showInPreview": true,
+          "excludeTitle": true
+        }
+      }
+    }
+  }
+}

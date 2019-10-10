@@ -1,0 +1,14 @@
+.classpath
+.project
+.settings
+build
+bin
+.gradle
+out
+cordra-technical-manual/_build
+version.txt
+.idea
+*.ipr
+*.iws
+*.iml
+.DS_Store

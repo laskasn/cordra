@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Registration Example</title>
+  <script src="cordra-client.min.js"></script>
+  <script type="application/javascript">
+    const client = new cnri.CordraClient('http://localhost:8080');
+
+    function doRegister(event) {
+        event.preventDefault();
+        const username = document.getElementById('register-username').value;
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+        const userObj = {
+            type: 'User',
+            content: {
+                username,
+                email,
+                password
+            }
+        };
+        return client.create(userObj)
+          .then(res => {
+              document.getElementById('last-response').innerText = JSON.stringify(res, null, 2);
+              document.getElementById('validate-userid').value = res.id;
+          })
+          .catch(err => {
+              document.getElementById('last-response').innerText = JSON.stringify(err, null, 2);
+          });
+    }
+
+    function doSignIn(event) {
+        event.preventDefault();
+        const username = document.getElementById('signin-username').value;
+        const password = document.getElementById('signin-password').value;
+        const options = { 'username': username, 'password': password };
+        return client.authenticate(options)
+          .then(res => {
+              document.getElementById('auth-info').innerText = JSON.stringify(res, null, 2);
+              document.getElementById('last-response').innerText = JSON.stringify(res, null, 2);
+          })
+          .catch(err => {
+              document.getElementById('last-response').innerText = JSON.stringify(err, null, 2);
+          });
+    }
+
+    function doSignOut(event) {
+        event.preventDefault();
+        return client.signOut()
+          .then(res => {
+              document.getElementById('auth-info').innerText = JSON.stringify(res, null, 2);
+              document.getElementById('last-response').innerText = JSON.stringify(res, null, 2);
+          })
+          .catch(err => {
+              document.getElementById('last-response').innerText = JSON.stringify(err, null, 2);
+          });
+    }
+
+    function doKeyValidate(event) {
+        event.preventDefault();
+        const idToValidate = document.getElementById('validate-userid').value;
+        const keyToValidate = document.getElementById('validate-key').value;
+        const methodName = 'activateAccountIfKeyIsValid';
+        const methodContext = {
+            activationKey: keyToValidate
+        };
+        return client.callMethod(idToValidate, methodName, methodContext)
+          .then(res => {
+              document.getElementById('last-response').innerText = JSON.stringify(res, null, 2);
+          })
+          .catch(err => {
+              document.getElementById('last-response').innerText = JSON.stringify(err, null, 2);
+          });
+    }
+  </script>
+</head>
+<body style="padding: 25px">
+
+<div style="width: 50%; float: left">
+  <div>
+    <b>User Registration</b>
+    <form id="register-form" method="post" onsubmit="doRegister(event)">
+      <label>
+        Username:
+        <input id="register-username" type="text" name="username">
+      </label><br>
+      <label>
+        Email:
+        <input id="register-email" type="text" name="email">
+      </label><br>
+      <label>
+        Password:
+        <input id="register-password" type="password" name="password">
+      </label><br>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+  <br>
+  <div>
+    <b>User Sign In</b>
+    <form id="signin-form" method="post" onsubmit="doSignIn(event)">
+      <label>
+        Username:
+        <input id="signin-username" type="text" name="username" />
+      </label><br />
+      <label>
+        Password:
+        <input id="signin-password" type="password" name="password" />
+      </label><br />
+      <button type="submit">Sign In</button>
+    </form>
+    <button onclick="doSignOut(event)">Log Out</button>
+  </div>
+  <br>
+  <div>
+    <b>Validate Activation Key</b>
+    <form method="post" onsubmit="doKeyValidate(event)">
+      <label>
+        Username:
+        <input id="validate-userid" type="text" name="userId" />
+      </label><br />
+      <label>
+        Key:
+        <input id="validate-key" type="text" name="key" />
+      </label><br />
+      <button type="submit">Validate Key</button>
+    </form>
+  </div>
+</div>
+
+<div style="width: 50%; float: left">
+  <div>
+    <b>Authentication Info</b><br>
+    <pre id="auth-info">None</pre>
+  </div><br>
+  <div>
+    <b>Last server response</b><br>
+    <pre id="last-response">None</pre>
+  </div>
+</div>
+
+</body>
+</html>

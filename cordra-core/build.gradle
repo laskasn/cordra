@@ -1,0 +1,52 @@
+apply plugin: 'java-library'
+
+group = 'net.cnri.cordra'
+archivesBaseName = 'cordra-core'
+version = rootProject.version
+
+configurations.all {
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'commons-codec'
+        && details.requested.name == 'commons-codec'
+        && details.requested.version < '1.13') {
+            details.useTarget group: 'commons-codec', name: 'commons-codec', version: '1.13'
+        }
+    }
+}
+
+configurations {
+    apiOptional
+    api.extendsFrom apiOptional
+    implementationOptional
+    implementation.extendsFrom implementationOptional
+}
+
+dependencies {
+    api 'com.google.code.gson:gson:2.8.5'
+    implementation 'org.slf4j:slf4j-api:1.7.28'
+
+    implementationOptional 'org.apache.logging.log4j:log4j-api:2.12.1'
+    implementationOptional 'org.apache.logging.log4j:log4j-core:2.12.1'
+    implementationOptional 'org.apache.logging.log4j:log4j-slf4j-impl:2.12.1'
+
+    testCompile 'junit:junit:4.12'
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        pom.getScopeMappings().setSkipUnmappedConfs(false)
+        pom.whenConfigured { pom ->
+            pom.dependencies.removeAll { dep -> dep.scope == 'test' }
+            pom.dependencies.findAll { pomDep ->
+                project.configurations.apiOptional.dependencies.any { confDep ->
+                    confDep.group == pomDep.groupId && confDep.name == pomDep.artifactId
+                }
+            }.each { dep -> dep.scope = 'compile'; dep.optional = true }
+            pom.dependencies.findAll { pomDep ->
+                project.configurations.implementationOptional.dependencies.any { confDep ->
+                    confDep.group == pomDep.groupId && confDep.name == pomDep.artifactId
+                }
+            }.each { dep -> dep.scope = 'runtime'; dep.optional = true }
+        }
+    }
+}

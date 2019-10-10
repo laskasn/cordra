@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="cordra" version="1.6">
+    <uniqueKey>id</uniqueKey>
+
+    <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="id" class="solr.TextField">
+        <analyzer>
+            <tokenizer class="solr.KeywordTokenizerFactory" />
+        </analyzer>
+    </fieldType>
+    <fieldType name="keyword" class="solr.TextField" positionIncrementGap="10000">
+        <analyzer>
+            <tokenizer class="solr.KeywordTokenizerFactory" />
+            <filter class="solr.LowerCaseFilterFactory" />
+        </analyzer>
+    </fieldType>
+    <fieldType name="text" class="solr.TextField" positionIncrementGap="10000">
+    <analyzer>
+      <tokenizer class="solr.StandardTokenizerFactory" />
+      <filter class="solr.LowerCaseFilterFactory" />
+    </analyzer>
+    </fieldType>
+
+    <field name="_version_" type="long" indexed="true" stored="true" multiValued="false"/>
+    <field name="id" type="id" indexed="true" stored="true" required="true" />
+    <field name="repoid" type="keyword" indexed="true" stored="false" />
+    <field name="type" type="keyword" indexed="true" stored="false" />
+    <field name="aclRead" type="keyword" indexed="true" stored="false" multiValued="true" />
+    <field name="aclWrite" type="keyword" indexed="true" stored="false" multiValued="true" />
+    <field name="createdBy" type="keyword" indexed="true" stored="false" />
+    <field name="remoteRepository" type="keyword" indexed="true" stored="false" />
+    <field name="username" type="keyword" indexed="true" stored="false" />
+    <field name="users" type="keyword" indexed="true" stored="false" multiValued="true" />
+    <field name="schemaName" type="keyword" indexed="true" stored="false" />
+    <field name="javaScriptModuleName" type="keyword" indexed="true" stored="false" multiValued="true" />
+    <field name="internal.pointsAt" type="keyword" indexed="true" stored="false" multiValued="true" />
+    <field name="internal.all" type="text" indexed="true" stored="false" multiValued="true" />
+    <field name="txnId" type="long" indexed="true" stored="false" />
+    <dynamicField name="/*" type="text" indexed="true" stored="false" multiValued="true" termVectors="true" />
+    <dynamicField name="objatt_*" type="text" indexed="true" stored="false" />
+    <dynamicField name="elatt_*" type="text" indexed="true" stored="false" />
+    <dynamicField name="elname_*" type="text" indexed="true" stored="false" />
+    <dynamicField name="sort_*" type="keyword" indexed="true" stored="false" docValues="false" omitNorms="true" />
+    <dynamicField name="*" type="text" indexed="true" stored="false" />
+</schema>

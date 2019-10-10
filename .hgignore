@@ -1,0 +1,17 @@
+^([^/]*/)?.classpath$
+^([^/]*/)?.project$
+^([^/]*/)?.settings$
+^([^/]*/)?build$
+^([^/]*/)?idea$
+^([^/]*/)?bin$
+^.gradle$
+^([^/]*/)?out$
+^cordra-technical-manual/_build$
+version.txt$
+.ipr$
+.iws$
+^.idea$
+^.idea/$
+.idea
+.DS_Store
+.iml

@@ -1,0 +1,132 @@
+apply plugin: 'java'
+
+group = 'net.cnri.cordra'
+archivesBaseName = 'cordra-startup'
+version = rootProject.version
+
+configurations {
+    servletContainer
+    compileClasspath.extendsFrom servletContainer
+    cordra
+    cordraTechnicalManual
+    cordraClientHandleStorage
+    cordraSrc
+    cordraZip
+}
+
+dependencies {
+    compile 'net.cnri:cnriutil:2.0'
+    compile 'net.handle:handle-client:9.2.0'
+    compile 'com.google.code.gson:gson:2.8.5'
+    compile 'commons-codec:commons-codec:1.13'
+    compile 'org.bouncycastle:bcprov-jdk15on:1.63'
+    compile 'org.bouncycastle:bcpkix-jdk15on:1.63'
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'org.slf4j:slf4j-api:1.7.28'
+    // use same version of Guava as cordra.war
+    compile 'com.google.guava:guava:17.0'
+
+    runtime 'net.sf.jopt-simple:jopt-simple:5.0.4'
+    runtime 'org.apache.logging.log4j:log4j-api:2.12.1'
+    runtime 'org.apache.logging.log4j:log4j-core:2.12.1'
+    runtime 'org.apache.logging.log4j:log4j-slf4j-impl:2.12.1'
+
+    servletContainer 'net.cnri:cnri-servlet-container:2.2.0'
+
+    cordra project(path: ':', configuration: 'cordraWar')
+    cordraTechnicalManual project(path: ':cordra-technical-manual', configuration: 'pdfConfiguration')
+    cordraClientHandleStorage project(':cordra-client-handle-storage')
+    cordraSrc project(path: ':', configuration: 'cordraSrc')
+
+    testCompile 'junit:junit:4.12'
+    testCompile project(':')
+}
+
+task distExploded(type: Copy) {
+    dependsOn clean, jar
+    destinationDir rootProject.distsDir
+    outputs.upToDateWhen { false }
+    String folderPath = 'cordra-' + version
+    from('src/main/dist') {
+        into folderPath
+    }
+    from(rootProject.file('LICENSE.txt')) {
+        into folderPath
+    }
+    from(project(':cordra-client').file('src/main/resources/META-INF/LICENSE.txt')) {
+        into folderPath
+        rename { file -> 'cordra-client-LICENSE.txt' }
+    }
+    from(project.libsDir) {
+        into folderPath + '/sw/lib'
+        include 'cordra-startup-' + version + '.jar'
+    }
+    from(configurations.compile - project(':cordra-client').configurations.toDistribute) {
+        into folderPath + '/sw/lib'
+        exclude 'cordra-core-' + version + '.jar'
+        exclude 'cordra-client-' + version + '.jar'
+    }
+    from(configurations.runtime - project(':cordra-client').configurations.toDistribute) {
+        into folderPath + '/sw/lib'
+        exclude 'cordra-core-' + version + '.jar'
+        exclude 'cordra-client-' + version + '.jar'
+    }
+    from (project(':cordra-core').libsDir) {
+        into folderPath + '/sw/lib/cordra-client'
+    }
+    from (project(':cordra-client').libsDir) {
+        into folderPath + '/sw/lib/cordra-client'
+    }
+    from (project(':cordra-client').configurations.toDistribute) {
+        into folderPath + '/sw/lib/cordra-client'
+    }
+    from(configurations.servletContainer
+         - configurations.compile
+         - configurations.runtime
+         - project(':cordra-client').configurations.toDistribute) {
+        into folderPath + '/sw/lib/servletContainer'
+    }
+    from(configurations.cordra) {
+        into folderPath + '/sw/webapps-priority'
+        include 'cordra-*.war'
+        rename { file -> 'ROOT.war' }
+    }
+    from(configurations.cordraTechnicalManual) {
+        into folderPath
+    }
+    from(project(':cordra-technical-manual').buildDir.path + '/extensionsDist') {
+        into folderPath + '/extensions'
+    }
+    from(configurations.cordraClientHandleStorage) {
+        into folderPath + '/cordra-client-handle-storage'
+    }
+    from(project(':cordra-client-handle-storage').projectDir) {
+        into folderPath + '/cordra-client-handle-storage'
+        include 'README.txt'
+    }
+    from(configurations.cordraSrc) {
+        into folderPath + '/src'
+    }
+}
+
+task distZip(type: Zip) {
+    dependsOn distExploded
+    baseName 'cordra'
+    classifier 'distribution'
+    destinationDir rootProject.distsDir
+    String folderPath = 'cordra-' + version
+    from("$rootProject.distsDir/$folderPath") {
+        into folderPath
+    }
+}
+
+test {
+    testLogging {
+//        events "passed", "failed", "skipped"
+        events "failed", "skipped"
+    }
+}
+
+artifacts {
+    cordraZip distZip
+}
