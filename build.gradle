@@ -57,6 +57,8 @@ dependencies {
     compile 'net.dona.doip:doip-sdk:2.1.0'
     compile project(':cordra-doip')
     compile project(':cordra-core'), { transitive = false }
+    // dependency for Keycloak
+    compile 'org.keycloak:keycloak-servlet-filter-adapter:6.0.1'
 
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 
@@ -117,8 +119,8 @@ appendVersionQuery.mustRunAfter clean
 war.dependsOn buildVersionInfo
 war.dependsOn appendVersionQuery
 war {
-    mainSpec.exclude '*.html'
-    mainSpec.exclude 'js-test/*.html'
+    //mainSpec.exclude '*.html'
+    //mainSpec.exclude 'js-test/*.html'
     rootSpec.from('build/tmp/html-with-version')
 
     from(configurations.toolsJars) {

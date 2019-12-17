@@ -1,0 +1,31 @@
+{
+   "realm" : "GRNet",
+   "resource" : "cordra-bearer",
+   "auth-server-url" : "https://snf-3193.ok-kno.grnetcloud.net/auth",
+   "ssl-required" : "external",
+   "confidential-port" : 8443,
+   "use-resource-role-mappings" : false,
+   "enable-cors" : true,
+   "cors-max-age" : 1000,
+   "cors-allowed-methods" : "POST, PUT, DELETE, GET",
+   "cors-exposed-headers" : "WWW-Authenticate",
+   "bearer-only" : true,
+   "enable-basic-auth" : false,
+   "expose-token" : true,
+   "verify-token-audience" : false,
+   "public-client" : true,
+   "credentials" : {
+      "secret" : "7313c57c-cc13-41d0-9a24-bf12c53767e1"
+   },
+   "connection-pool-size" : 20,
+   "disable-trust-manager": true,
+   "allow-any-hostname" : false,
+   "truststore" : "./keys/KeyStore.jks",
+   "truststore-password" : "callmebymyname",
+   "client-keystore" : "./keys/KeyStore.jks",
+   "client-keystore-password" : "callmebymyname",
+   "client-key-password" : "callmebymyname",
+   "token-minimum-time-to-live" : 10,
+   "min-time-between-jwks-requests" : 10,
+   "public-key-cache-ttl": 86400
+}

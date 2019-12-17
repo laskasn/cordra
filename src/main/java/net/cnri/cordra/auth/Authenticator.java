@@ -5,7 +5,9 @@
 
 package net.cnri.cordra.auth;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -13,6 +15,7 @@ import net.cnri.cordra.GsonUtility;
 import net.cnri.cordra.*;
 import net.cnri.cordra.Design.CookieConfig;
 import net.cnri.cordra.api.*;
+import net.cnri.cordra.auth.keycloak.PreprocessingFilter;
 import net.cnri.cordra.storage.memory.MemoryStorage;
 import net.cnri.cordra.sync.KeyPairAuthJtiChecker;
 import net.cnri.cordra.sync.local.MemoryKeyPairAuthJtiChecker;
@@ -28,8 +31,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.util.*;
@@ -178,7 +187,17 @@ public class Authenticator {
                 String username = c.getUsername();
                 String password = c.getPassword();
                 credsResponse = checkCredentialsAndReportResult(req, username, password);
-            } else if (isCordraKeyPairAuth(authHeader)) {
+            }
+            else if (isKeycloakAuth(req)) {
+            	System.out.println("FOUND A KEYCLOAK HEADER, PERFORMING THE REQUIRED ACTIONS");
+            	
+            	//check if the user already has an associated object.
+            	boolean succeeded = initialiseKeycloakUser(req, authHeader);
+            	
+            	//has already passed the keycloak authentication filter, so whitelist it
+            	return AuthenticationResponse.SUCCESS;
+            }
+            else if (isCordraKeyPairAuth(authHeader)) {
                 String jwt = getJwtFromAuthHeader(authHeader);
                 credsResponse = checkJwtCredentials(req, jwt);
             }
@@ -199,6 +218,78 @@ public class Authenticator {
         }
     }
 
+    private boolean initialiseKeycloakUser(HttpServletRequest req, String authHeader) {
+    	String jwt = getJwtFromAuthHeader(authHeader);
+    	//jwt validity is already checked by Keycloak filter
+    	String[] splits = jwt.split("\\.");
+    	if(splits.length!=3)
+    		return false;
+    	String jsonPayloadStr = new String(Base64.getDecoder().decode(splits[1].getBytes()));
+    	
+    	JSONObject jsonPayload;
+    	try {
+    		jsonPayload = (JSONObject) new JSONParser().parse(jsonPayloadStr);
+		} catch (ParseException e) {
+			return false;
+		} 
+    	
+    	String userId = jsonPayload.get("sub").toString();
+    	String username = jsonPayload.get("preferred_username").toString();
+    	String fullname = jsonPayload.get("name").toString();
+    	String name = jsonPayload.get("given_name").toString();
+    	String surname = jsonPayload.get("family_name").toString();
+    	String email = jsonPayload.get("email").toString();
+    
+    	String prefixedUserId = cordra.getHandleForSuffix(userId);
+    	
+    	
+    	CordraObject existingUser = null;
+    	try {
+    		existingUser = cordra.getCordraObjectOrNull(prefixedUserId);
+		} catch (CordraException e1) {
+			return false;
+		}
+    	if(existingUser != null) {
+    		return true;
+    	}
+    	
+    	req.setAttribute("userId", userId);
+    	
+    	Map<String, Object> userObject = new HashMap<String, Object>();
+
+    	userObject.put("id", prefixedUserId);
+    	userObject.put("username", username);
+    	userObject.put("password", randomPassword(18));
+    	
+    	String userJson;
+		try {
+			userJson = new ObjectMapper().writeValueAsString(userObject);
+		} catch (JsonProcessingException e) {
+			return false;
+		}
+		
+    	CordraObject user = null;
+    	try {
+			user = cordra.writeJsonAndPayloadsIntoCordraObjectIfValid("User", userJson, null, null, new ArrayList<Payload>(), prefixedUserId, userId, false);
+		} catch (CordraException | InvalidException | ReadOnlyCordraException e) {
+			return false;
+		}
+    	
+    	if(user==null)
+    		return false;
+    	
+    	
+    	return true;
+    }
+    
+    private static String randomPassword(int length) {
+    	byte [] password = new byte[length];
+    	for(int i=0;i<length;i++)
+    		password[i] = (byte)Math.floor((double)(Math.random()*93)+33);
+    	return new String(password, StandardCharsets.UTF_8);
+    }
+    
+    
     public static boolean isBearerTokenForSession(String authHeader) {
         if (authHeader == null) return false;
         String[] parts = authHeader.trim().split(" +");
@@ -489,6 +580,10 @@ public class Authenticator {
         return authHeader.startsWith("Basic ");
     }
 
+    private static boolean isKeycloakAuth(HttpServletRequest req) {
+    	return req.getAttribute(PreprocessingFilter.IS_KEYCLOAK) != null;
+    }
+    
     private static boolean isCordraKeyPairAuth(String authHeader) {
         // after ruled out access token
         return authHeader.startsWith("Bearer ");
