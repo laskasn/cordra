@@ -54,7 +54,9 @@
             // was ../ under classic
             cordra = new cnri.CordraClient(".");
             retrieveCordraOptions();
-            
+
+console.log(" IN CordraApp constructor: ",cordra.defaultOptions, cordra.keycloakClient)
+
             editorDiv = $("#editor");
             searchDiv = $("#search");
             notificationsDiv = $("#notifications");
@@ -77,6 +79,8 @@
             sections["designJavaScript"] = designJavaScriptDiv;
 
             cordra.buildAuthHeadersReturnDetails().then(function (headersObj) {
+
+              console.log("buildAuthHeadersReturnDetails().then:  headersObj is ", headersObj)
                 if (headersObj.unauthenticated) {
                     storeCordraOptions({});
                     return fetch("initData")
@@ -103,17 +107,19 @@
             .then(onGotInitData);
             $(window).on("resize", onResize);
         }
-        
+
         function retrieveCordraOptions() {
             cordra.defaultOptions = JSON.parse(localStorage.getItem("cordraOptions")) || {};
+            console.log("Retrieved the options: ", cordra.defaultOptions)
         }
-        
+
         function storeCordraOptions(options) {
             localStorage.setItem("cordraOptions", JSON.stringify(options))
             cordra.defaultOptions = options;
+            console.log("Stored the options: ", cordra.defaultOptions)
         }
         self.storeCordraOptions = storeCordraOptions;
-        
+
         function getResponseJson(response) {
             return response.json();
         }
@@ -129,6 +135,9 @@
         }
 
         function onGotInitData(response) {
+
+          console.log("onGotInitData(): response is: ", response)
+
             design = response.design;
             uiConfig = response.design.uiConfig;
             schemas = response.design.schemas;
@@ -218,6 +227,7 @@
         }
 
         function onAuthenticationStateChange() {
+          console.log("onAuthenticationStateChange: ", cordra)
             var userId = authWidget.getCurrentUserId();
             if (userId === "admin") {
                 enableAdminControls();
@@ -1226,6 +1236,7 @@
         }
 
         constructor();
+
     }
 
     window.CordraApp = CordraApp;

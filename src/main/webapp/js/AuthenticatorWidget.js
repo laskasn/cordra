@@ -50,6 +50,10 @@ function AuthenticatorWidget(
     var dialogNotifications = null;
 
     function constructor() {
+
+      console.log("ActiveSession: ", isActiveSession, "allowLogin: ", allowLogin)
+
+
         if (allowLogin) {
             signInButton = $(
                 '<button type="button" class="btn btn-primary btn-sm"><i class="fa fa-user"></i>Sign In</button>'
@@ -81,6 +85,7 @@ function AuthenticatorWidget(
         signOutLink.on("click", onSignOutLinkClick);
 
         buildAuthenticateDialog();
+
         if (isActiveSession) {
             userInfo.userId = userIdParam;
             userInfo.username = usernameParam;
@@ -129,8 +134,13 @@ function AuthenticatorWidget(
         var secretKeyNav = $(
             '<li class="active"><a href="#secretKeyAuth" data-toggle="tab">Password</a></li>'
         );
+        var externalAuthNav = $(
+            '<li><a href="#externalAuthNav" data-toggle="tab">External auth</a></li>'
+        );
+
         tabNav.append(secretKeyNav);
         tabNav.append(privateKeyNav);
+        tabNav.append(externalAuthNav);
         authenticateModeSelectDiv.append(tabNav);
 
         var tabContentDiv = $(
@@ -145,8 +155,21 @@ function AuthenticatorWidget(
             '<div class="tab-pane fade in active" id="secretKeyAuth"></div>'
         );
 
+        externalAuthenticateDiv = $(
+            '<div class="tab-pane fade" id="externalAuthNav"></div>'
+        );
+
         tabContentDiv.append(secretKeyAuthenticateDiv);
         tabContentDiv.append(privateKeyAuthenticateDiv);
+        tabContentDiv.append(externalAuthenticateDiv);
+
+
+        //external auth
+        authenticateButton = $(
+            '<button type="button" class="btn btn-sm btn-primary" style="min-width: 130px;" data-loading-text="Redirecting...">Authenticate</button>'
+        );
+        externalAuthenticateDiv.append(authenticateButton);
+        authenticateButton.on("click", onExternalAuthButtonClick);
 
         //private key
         var privateKeyAuthenticateForm = $("<form>");
@@ -239,6 +262,45 @@ function AuthenticatorWidget(
         passwordAuthenticateForm.append(authenticateButton);
         authenticateButton.on("click", onAuthenticateButtonClick);
     }
+
+    function onExternalAuthButtonClick(e){
+      e.preventDefault();
+
+      let options = {
+        keycloakConfig: {
+            url: "https://snf-3193.ok-kno.grnetcloud.net/auth",
+            realm: "GRNet",
+            clientId: "cordra-client"
+        }
+      }
+
+      //APP.storeCordraOptions(options); //REQUIRED, because next call redirects to external auth (oidc)
+
+      APP.getAuthenticationStatus(true)
+        .then(function (statusResp) {
+            onAuthenticateSuccess(statusResp);
+        })
+        .catch((error) => console.log);
+
+      APP.authenticate(options)
+        .then((resp) => {
+          options.token = resp.access_token;
+          APP.storeCordraOptions(options);
+
+          APP.getAuthenticationStatus(true)
+            .then(function (statusResp) {
+                onAuthenticateSuccess(statusResp);
+            })
+            .catch((error) => console.log);
+
+        })
+        .catch(onAuthenticateError);
+
+
+    }
+
+
+
 
     function onSignInClick() {
         usernameInput.trigger("focus");
@@ -432,6 +494,7 @@ function AuthenticatorWidget(
     }
 
     function setAuthenticated() {
+
         isActiveSession = true;
         APP.notifications.clear();
         dialogNotifications.clear();
@@ -481,6 +544,10 @@ function AuthenticatorWidget(
     self.setTypesPermittedToCreate = setTypesPermittedToCreate;
 
     function onAuthenticateError(response) {
+
+      console.log("AUTHENTICATION FAILED FOR REASON: ", response);
+
+/*
         var msg;
         if (secretKeyAuthenticateDiv.is(":visible")) {
             msg = "The username or password you entered is incorrect";
@@ -496,6 +563,8 @@ function AuthenticatorWidget(
         dialogNotifications.alertError(msg);
         authenticateButton.button("reset");
         privateKeyAuthenticateButton.button("reset");
+        */
+
     }
 
     function getCurrentUserId() {
