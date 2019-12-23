@@ -50,12 +50,34 @@
         var networkAndSecurity = null;
         var sections = {};
 
-        function constructor() {
-            // was ../ under classic
-            cordra = new cnri.CordraClient(".");
-            retrieveCordraOptions();
 
-console.log(" IN CordraApp constructor: ",cordra.defaultOptions, cordra.keycloakClient)
+        function constructor() {
+
+
+            let storedOptions = getStoredCordraOptions();
+
+              let storedOptions = {
+                keycloakConfig : {
+                  url: "https://snf-3193.ok-kno.grnetcloud.net/auth",
+                  realm: "GRNet",
+                  clientId: "cordra-client"
+                }
+              }
+
+
+            // was ../ under classic
+            cordra = new cnri.CordraClient(".", storedOptions);
+
+            cordra.authenticate()
+                  .then((authenticated) => {
+                      if(authenticated==true){
+                        cordra.defaultOptions.token = cordra.keycloakClient.token;
+                        storeCordraOptions(cordra.defaultOptions);
+                      }
+                  })
+                  .catch( (e) => console.log(e));
+
+
 
             editorDiv = $("#editor");
             searchDiv = $("#search");
@@ -78,40 +100,61 @@ console.log(" IN CordraApp constructor: ",cordra.defaultOptions, cordra.keycloak
             sections["networkAndSecurity"] = networkAndSecurityDiv;
             sections["designJavaScript"] = designJavaScriptDiv;
 
-            cordra.buildAuthHeadersReturnDetails().then(function (headersObj) {
+            buildCordraAuthHeadersReturnDetails();
 
-              console.log("buildAuthHeadersReturnDetails().then:  headersObj is ", headersObj)
-                if (headersObj.unauthenticated) {
-                    storeCordraOptions({});
-                    return fetch("initData")
-                    .then(cnri.CordraClient.checkForErrors);
-                } else if (!headersObj.isStoredToken) {
-                    return fetch("initData", {
-                        headers: headersObj.headers
-                    })
-                    .then(cnri.CordraClient.checkForErrors);
-                } else {
-                    return fetch("initData", {
-                        headers: headersObj.headers
-                    })
-                    .then(cnri.CordraClient.checkForErrors)
-                    .catch(function (error) {
-                        if (error.status !== 401) return Promise.reject(error);
-                        storeCordraOptions({});
-                        return fetch("initData")
-                        .then(cnri.CordraClient.checkForErrors);
-                    })
-                }
-            })
-            .then(getResponseJson)
-            .then(onGotInitData);
+
             $(window).on("resize", onResize);
         }
 
-        function retrieveCordraOptions() {
-            cordra.defaultOptions = JSON.parse(localStorage.getItem("cordraOptions")) || {};
-            console.log("Retrieved the options: ", cordra.defaultOptions)
+
+
+        function buildCordraAuthHeadersReturnDetails(){
+
+          cordra.buildAuthHeadersReturnDetails().then(function (headersObj) {
+
+
+              if (headersObj.unauthenticated) {
+                  storeCordraOptions({});
+                  return fetch("initData")
+                  .then(cnri.CordraClient.checkForErrors);
+              } else if (!headersObj.isStoredToken) {
+                  return fetch("initData", {
+                      headers: headersObj.headers
+                  })
+                  .then(cnri.CordraClient.checkForErrors);
+              } else {
+                  return fetch("initData", {
+                      headers: headersObj.headers
+                  })
+                  .then(cnri.CordraClient.checkForErrors)
+                  .catch(function (error) {
+                      if (error.status !== 401) return Promise.reject(error);
+                      storeCordraOptions({});
+                      return fetch("initData")
+                      .then(cnri.CordraClient.checkForErrors);
+                  })
+              }
+          })
+          .then(getResponseJson)
+          .then(onGotInitData);
+
         }
+
+
+        function getStoredCordraOptions() {
+            const storedOptions = JSON.parse(localStorage.getItem("cordraOptions")) || {};
+            console.log("Retrieved the options: ", storedOptions);
+            return storedOptions;
+        }
+        self.getStoredCordraOptions = getStoredCordraOptions;
+
+
+        function retrieveCordraOptions() {
+            const storedOptions = JSON.parse(localStorage.getItem("cordraOptions")) || {};
+            cordra.defaultOptions = storedOptions || {};
+            return storedOptions;
+        }
+        self.retrieveCordraOptions = retrieveCordraOptions;
 
         function storeCordraOptions(options) {
             localStorage.setItem("cordraOptions", JSON.stringify(options))
@@ -135,8 +178,6 @@ console.log(" IN CordraApp constructor: ",cordra.defaultOptions, cordra.keycloak
         }
 
         function onGotInitData(response) {
-
-          console.log("onGotInitData(): response is: ", response)
 
             design = response.design;
             uiConfig = response.design.uiConfig;
@@ -227,7 +268,7 @@ console.log(" IN CordraApp constructor: ",cordra.defaultOptions, cordra.keycloak
         }
 
         function onAuthenticationStateChange() {
-          console.log("onAuthenticationStateChange: ", cordra)
+
             var userId = authWidget.getCurrentUserId();
             if (userId === "admin") {
                 enableAdminControls();

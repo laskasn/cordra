@@ -263,39 +263,22 @@ function AuthenticatorWidget(
         authenticateButton.on("click", onAuthenticateButtonClick);
     }
 
-    function onExternalAuthButtonClick(e){
+
+
+    async function onExternalAuthButtonClick(e){
       e.preventDefault();
+      let options = APP.getStoredCordraOptions();
 
-      let options = {
-        keycloakConfig: {
-            url: "https://snf-3193.ok-kno.grnetcloud.net/auth",
-            realm: "GRNet",
-            clientId: "cordra-client"
-        }
-      }
+      //get from an external source these options
+      options['keycloakConfig'] = {
+          url: "https://snf-3193.ok-kno.grnetcloud.net/auth",
+          realm: "GRNet",
+          clientId: "cordra-client"
+      };
 
-      //APP.storeCordraOptions(options); //REQUIRED, because next call redirects to external auth (oidc)
-
-      APP.getAuthenticationStatus(true)
-        .then(function (statusResp) {
-            onAuthenticateSuccess(statusResp);
-        })
-        .catch((error) => console.log);
-
-      APP.authenticate(options)
-        .then((resp) => {
-          options.token = resp.access_token;
-          APP.storeCordraOptions(options);
-
-          APP.getAuthenticationStatus(true)
-            .then(function (statusResp) {
-                onAuthenticateSuccess(statusResp);
-            })
-            .catch((error) => console.log);
-
-        })
-        .catch(onAuthenticateError);
-
+      APP.storeCordraOptions(options);
+      let authResponse = await APP.authenticate(options);
+      options.token = authResponse.access_token;
 
     }
 
@@ -361,9 +344,9 @@ function AuthenticatorWidget(
                 .then(function (resp) {
                     APP.storeCordraOptions({ username: username });
                     return APP.getAuthenticationStatus(true)
-                    .then(function (statusResp) {
-                        onAuthenticateSuccess(statusResp);
-                    });
+                      .then(function (statusResp) {
+                          onAuthenticateSuccess(statusResp);
+                      });
                 })
                 .catch(onAuthenticateError);
         }
@@ -547,7 +530,6 @@ function AuthenticatorWidget(
 
       console.log("AUTHENTICATION FAILED FOR REASON: ", response);
 
-/*
         var msg;
         if (secretKeyAuthenticateDiv.is(":visible")) {
             msg = "The username or password you entered is incorrect";
@@ -563,8 +545,6 @@ function AuthenticatorWidget(
         dialogNotifications.alertError(msg);
         authenticateButton.button("reset");
         privateKeyAuthenticateButton.button("reset");
-        */
-
     }
 
     function getCurrentUserId() {
