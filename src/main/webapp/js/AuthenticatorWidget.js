@@ -51,8 +51,6 @@ function AuthenticatorWidget(
 
     function constructor() {
 
-      console.log("ActiveSession: ", isActiveSession, "allowLogin: ", allowLogin)
-
 
         if (allowLogin) {
             signInButton = $(
@@ -272,7 +270,7 @@ function AuthenticatorWidget(
       //get from an external source these options
       options['keycloakConfig'] = {
           url: "https://snf-3193.ok-kno.grnetcloud.net/auth",
-          realm: "GRNet",
+          realm: "master",
           clientId: "cordra-client"
       };
 
@@ -442,6 +440,7 @@ function AuthenticatorWidget(
                 return APP.getAuthenticationStatus(true)
                 .then(function (statusResp) {
                     onSignOutSuccess(statusResp);
+                    location.reload();
                 });
             })
             .catch(function (resp) {
@@ -500,7 +499,9 @@ function AuthenticatorWidget(
         authenticateDiv.modal("hide");
         authenticateDiv.hide();
         authenticatedDiv.show();
-        heartbeatTimer = setTimeout(heartbeat, HEARTBEAT_TIMEOUT);
+        var storedOptions = APP.getStoredCordraOptions();
+        if((storedOptions.keycloakConfig == null) || (storedOptions.token == null))
+          heartbeatTimer = setTimeout(heartbeat, HEARTBEAT_TIMEOUT);
     }
 
     function onUsernameLabelClick(e) {
@@ -527,9 +528,6 @@ function AuthenticatorWidget(
     self.setTypesPermittedToCreate = setTypesPermittedToCreate;
 
     function onAuthenticateError(response) {
-
-      console.log("AUTHENTICATION FAILED FOR REASON: ", response);
-
         var msg;
         if (secretKeyAuthenticateDiv.is(":visible")) {
             msg = "The username or password you entered is incorrect";

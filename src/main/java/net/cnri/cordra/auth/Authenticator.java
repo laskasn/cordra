@@ -192,10 +192,9 @@ public class Authenticator {
             	System.out.println("FOUND A KEYCLOAK HEADER, PERFORMING THE REQUIRED ACTIONS");
             	
             	//check if the user already has an associated object.
-            	boolean succeeded = initialiseKeycloakUser(req, authHeader);
+            	credsResponse = initialiseKeycloakUser(req, authHeader);
             	
             	//has already passed the keycloak authentication filter, so whitelist it
-            	return AuthenticationResponse.SUCCESS;
             }
             else if (isCordraKeyPairAuth(authHeader)) {
                 String jwt = getJwtFromAuthHeader(authHeader);
@@ -218,19 +217,19 @@ public class Authenticator {
         }
     }
 
-    private boolean initialiseKeycloakUser(HttpServletRequest req, String authHeader) {
+    private CheckCredentialsResponse initialiseKeycloakUser(HttpServletRequest req, String authHeader) {
     	String jwt = getJwtFromAuthHeader(authHeader);
     	//jwt validity is already checked by Keycloak filter
     	String[] splits = jwt.split("\\.");
     	if(splits.length!=3)
-    		return false;
+    		return null;
     	String jsonPayloadStr = new String(Base64.getDecoder().decode(splits[1].getBytes()));
     	
     	JSONObject jsonPayload;
     	try {
     		jsonPayload = (JSONObject) new JSONParser().parse(jsonPayloadStr);
 		} catch (ParseException e) {
-			return false;
+			return null;
 		} 
     	
     	String userId = jsonPayload.get("sub").toString();
@@ -247,10 +246,10 @@ public class Authenticator {
     	try {
     		existingUser = cordra.getCordraObjectOrNull(prefixedUserId);
 		} catch (CordraException e1) {
-			return false;
+			return null;
 		}
     	if(existingUser != null) {
-    		return true;
+    		return new CheckCredentialsResponse(AuthenticationResponse.SUCCESS, username, existingUser.id /*prefixedUserId*/, true);
     	}
     	
     	req.setAttribute("userId", userId);
@@ -265,21 +264,21 @@ public class Authenticator {
 		try {
 			userJson = new ObjectMapper().writeValueAsString(userObject);
 		} catch (JsonProcessingException e) {
-			return false;
+			return null;
 		}
 		
     	CordraObject user = null;
     	try {
 			user = cordra.writeJsonAndPayloadsIntoCordraObjectIfValid("User", userJson, null, null, new ArrayList<Payload>(), prefixedUserId, userId, false);
 		} catch (CordraException | InvalidException | ReadOnlyCordraException e) {
-			return false;
+			return null;
 		}
     	
-    	if(user==null)
-    		return false;
+    	if(user == null)
+    		return null;
     	
     	
-    	return true;
+    	return new CheckCredentialsResponse(AuthenticationResponse.SUCCESS, username, user.id /*prefixedUserId*/, true);
     }
     
     private static String randomPassword(int length) {

@@ -53,31 +53,22 @@
 
         function constructor() {
 
-
             let storedOptions = getStoredCordraOptions();
-
-              let storedOptions = {
-                keycloakConfig : {
-                  url: "https://snf-3193.ok-kno.grnetcloud.net/auth",
-                  realm: "GRNet",
-                  clientId: "cordra-client"
-                }
-              }
-
 
             // was ../ under classic
             cordra = new cnri.CordraClient(".", storedOptions);
 
-            cordra.authenticate()
-                  .then((authenticated) => {
-                      if(authenticated==true){
+            if(storedOptions == null || storedOptions.token == null){
+                cordra.authenticate(storedOptions)
+                  .then((authResult) => {
+                      if(authResult!=null){
                         cordra.defaultOptions.token = cordra.keycloakClient.token;
                         storeCordraOptions(cordra.defaultOptions);
+                        location.reload();
                       }
                   })
                   .catch( (e) => console.log(e));
-
-
+            }
 
             editorDiv = $("#editor");
             searchDiv = $("#search");
@@ -102,7 +93,6 @@
 
             buildCordraAuthHeadersReturnDetails();
 
-
             $(window).on("resize", onResize);
         }
 
@@ -111,7 +101,6 @@
         function buildCordraAuthHeadersReturnDetails(){
 
           cordra.buildAuthHeadersReturnDetails().then(function (headersObj) {
-
 
               if (headersObj.unauthenticated) {
                   storeCordraOptions({});
@@ -136,6 +125,7 @@
               }
           })
           .then(getResponseJson)
+          .then(adaptByKeycloakState)
           .then(onGotInitData);
 
         }
@@ -143,7 +133,7 @@
 
         function getStoredCordraOptions() {
             const storedOptions = JSON.parse(localStorage.getItem("cordraOptions")) || {};
-            console.log("Retrieved the options: ", storedOptions);
+            //console.log("Retrieved the options: ", storedOptions);
             return storedOptions;
         }
         self.getStoredCordraOptions = getStoredCordraOptions;
@@ -159,7 +149,7 @@
         function storeCordraOptions(options) {
             localStorage.setItem("cordraOptions", JSON.stringify(options))
             cordra.defaultOptions = options;
-            console.log("Stored the options: ", cordra.defaultOptions)
+            //console.log("Stored the options: ", cordra.defaultOptions)
         }
         self.storeCordraOptions = storeCordraOptions;
 
@@ -176,6 +166,24 @@
             //        relationshipsGraph.onResize();
             //      }
         }
+
+
+        function adaptByKeycloakState(response) {
+
+          let storedOptions = getStoredCordraOptions();
+
+          if(storedOptions.token!=null && storedOptions.keycloakConfig!=null){
+            var parsedToken = JSON.parse(atob(storedOptions.token.split('.')[1]));
+            response['username'] = parsedToken.preferred_username;
+            response['userId'] = parsedToken.sub;
+            response['isActiveSession'] = true;
+          }
+
+          return response;
+        }
+
+
+
 
         function onGotInitData(response) {
 
@@ -228,6 +236,7 @@
             //window.onpopstate = handleOnpopstate;
             window.onhashchange = handleOnhashchange;
         }
+
 
         function checkIfLoginAllowed(allowInsecureLogin) {
             if (allowInsecureLogin) return true;
