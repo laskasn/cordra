@@ -260,7 +260,7 @@ function AuthenticatorWidget(
 
 
 
-    async function onExternalAuthButtonClick(e){
+    function onExternalAuthButtonClick(e){
       e.preventDefault();
       let options = APP.getStoredCordraOptions();
 
