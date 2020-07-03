@@ -152,7 +152,7 @@
             //console.log("Stored the options: ", cordra.defaultOptions)
         }
         self.storeCordraOptions = storeCordraOptions;
-
+        
         function getResponseJson(response) {
             return response.json();
         }
@@ -186,7 +186,6 @@
 
 
         function onGotInitData(response) {
-
             design = response.design;
             uiConfig = response.design.uiConfig;
             schemas = response.design.schemas;
@@ -237,7 +236,6 @@
             window.onhashchange = handleOnhashchange;
         }
 
-
         function checkIfLoginAllowed(allowInsecureLogin) {
             if (allowInsecureLogin) return true;
             return location.protocol === 'https:';
@@ -277,7 +275,6 @@
         }
 
         function onAuthenticationStateChange() {
-
             var userId = authWidget.getCurrentUserId();
             if (userId === "admin") {
                 enableAdminControls();

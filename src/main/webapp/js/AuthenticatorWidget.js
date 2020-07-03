@@ -50,8 +50,6 @@ function AuthenticatorWidget(
     var dialogNotifications = null;
 
     function constructor() {
-
-
         if (allowLogin) {
             signInButton = $(
                 '<button type="button" class="btn btn-primary btn-sm"><i class="fa fa-user"></i>Sign In</button>'
@@ -83,7 +81,6 @@ function AuthenticatorWidget(
         signOutLink.on("click", onSignOutLinkClick);
 
         buildAuthenticateDialog();
-
         if (isActiveSession) {
             userInfo.userId = userIdParam;
             userInfo.username = usernameParam;
@@ -274,9 +271,18 @@ function AuthenticatorWidget(
           clientId: "cordra-client"
       };
 
-      APP.storeCordraOptions(options);
-      let authResponse = await APP.authenticate(options);
-      options.token = authResponse.access_token;
+
+	  APP.storeCordraOptions(options);
+	  APP.authenticate(options)
+                .then(function (resp) {
+                	options.token = authResponse.access_token;
+                    //APP.storeCordraOptions(options);
+                    return APP.getAuthenticationStatus(true)
+	                    .then(function (statusResp) {
+	                        onAuthenticateSuccess(statusResp);
+	                    });
+                })
+                .catch(onAuthenticateError);
 
     }
 
@@ -342,9 +348,9 @@ function AuthenticatorWidget(
                 .then(function (resp) {
                     APP.storeCordraOptions({ username: username });
                     return APP.getAuthenticationStatus(true)
-                      .then(function (statusResp) {
-                          onAuthenticateSuccess(statusResp);
-                      });
+                    .then(function (statusResp) {
+                        onAuthenticateSuccess(statusResp);
+                    });
                 })
                 .catch(onAuthenticateError);
         }
@@ -476,7 +482,6 @@ function AuthenticatorWidget(
     }
 
     function setAuthenticated() {
-
         isActiveSession = true;
         APP.notifications.clear();
         dialogNotifications.clear();
