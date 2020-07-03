@@ -58,13 +58,13 @@
             // was ../ under classic
             cordra = new cnri.CordraClient(".", storedOptions);
 
-            if(storedOptions == null || storedOptions.token == null){
+            if(storedOptions.keycloakConfig != null){
                 cordra.authenticate(storedOptions)
                   .then((authResult) => {
                       if(authResult!=null){
                         cordra.defaultOptions.token = cordra.keycloakClient.token;
                         storeCordraOptions(cordra.defaultOptions);
-                        location.reload();
+                        //location.reload();
                       }
                   })
                   .catch( (e) => console.log(e));
@@ -118,7 +118,7 @@
                   .then(cnri.CordraClient.checkForErrors)
                   .catch(function (error) {
                       if (error.status !== 401) return Promise.reject(error);
-                      storeCordraOptions({});
+                      if(getStoredCordraOptions().keycloakConfig == null)  storeCordraOptions({});
                       return fetch("initData")
                       .then(cnri.CordraClient.checkForErrors);
                   })
