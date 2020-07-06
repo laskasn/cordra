@@ -58,18 +58,6 @@
             // was ../ under classic
             cordra = new cnri.CordraClient(".", storedOptions);
 
-            if(storedOptions.keycloakConfig != null){
-                cordra.authenticate(storedOptions)
-                  .then((authResult) => {
-                      if(authResult!=null){
-                        cordra.defaultOptions.token = cordra.keycloakClient.token;
-                        storeCordraOptions(cordra.defaultOptions);
-                        //location.reload();
-                      }
-                  })
-                  .catch( (e) => console.log(e));
-            }
-
             editorDiv = $("#editor");
             searchDiv = $("#search");
             notificationsDiv = $("#notifications");
@@ -91,7 +79,22 @@
             sections["networkAndSecurity"] = networkAndSecurityDiv;
             sections["designJavaScript"] = designJavaScriptDiv;
 
-            buildCordraAuthHeadersReturnDetails();
+
+            if(storedOptions.keycloakConfig != null){
+                cordra.authenticate(storedOptions)
+                  .then((authResult) => {
+                      if(authResult!=null){
+                        cordra.defaultOptions.token = cordra.keycloakClient.token;
+                        storeCordraOptions(cordra.defaultOptions);
+                        //adding here because we need to load UI after the authentication is completed
+                        buildCordraAuthHeadersReturnDetails();
+                      }
+                  })
+                  .catch( (e) => console.log(e));
+            }
+            else {
+                buildCordraAuthHeadersReturnDetails();
+            }
 
             $(window).on("resize", onResize);
         }
