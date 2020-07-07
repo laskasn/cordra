@@ -135,7 +135,8 @@ function AuthenticatorWidget(
 
         tabNav.append(secretKeyNav);
         tabNav.append(privateKeyNav);
-        tabNav.append(externalAuthNav);
+        if(APP.getExternalLoginConfig() != null)
+        	tabNav.append(externalAuthNav);
         authenticateModeSelectDiv.append(tabNav);
 
         var tabContentDiv = $(
@@ -263,14 +264,8 @@ function AuthenticatorWidget(
     function onExternalAuthButtonClick(e){
       e.preventDefault();
       let options = APP.getStoredCordraOptions();
-
-      //get from an external source these options
-      options['keycloakConfig'] = {
-          url: "https://snf-3193.ok-kno.grnetcloud.net/auth",
-          realm: "master",
-          clientId: "cordra-client"
-      };
-
+      
+      options['keycloakConfig'] = APP.getExternalLoginConfig();
 
 	  APP.storeCordraOptions(options);
 	  APP.authenticate(options)

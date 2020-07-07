@@ -34,6 +34,8 @@
 
         var design = null;
 
+        var externalLoginConfig = null
+        
         // Admin sections
         var schemasDiv = null;
         var schemasEditor = null;
@@ -133,6 +135,11 @@
 
         }
 
+        function getExternalLoginConfig(){
+        	return externalLoginConfig;
+        }
+        self.getExternalLoginConfig = getExternalLoginConfig;
+        
 
         function getStoredCordraOptions() {
             const storedOptions = JSON.parse(localStorage.getItem("cordraOptions")) || {};
@@ -189,6 +196,7 @@
 
 
         function onGotInitData(response) {
+        	externalLoginConfig = response.externalLoginConfig;
             design = response.design;
             uiConfig = response.design.uiConfig;
             schemas = response.design.schemas;

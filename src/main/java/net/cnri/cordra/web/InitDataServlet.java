@@ -1,6 +1,9 @@
 package net.cnri.cordra.web;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,6 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +56,14 @@ public class InitDataServlet extends HttpServlet {
                 initDataResponse.userId = (String) session.getAttribute("userId");
                 hasUserObject = ServletUtil.getBooleanAttribute(session, "hasUserObject");
             }
+            InputStream is = getServletContext().getResourceAsStream("/WEB-INF/keycloak-js-client.json");
+            if(is != null) {
+            	try {
+					initDataResponse.externalLoginConfig = (JSONObject)new JSONParser().parse(new InputStreamReader(is, Charset.forName("UTF-8")));
+				} catch (ParseException e) {
+					logger.error("The file keycloak-js-client.json at WEB-INF is not a valid JSON file. External login is disabled on UI");
+				}
+            }
             List<String> typesPermittedToCreate = cordra.getTypesPermittedToCreate(initDataResponse.userId, hasUserObject);
             initDataResponse.typesPermittedToCreate = typesPermittedToCreate;
             DesignPlusSchemas design = cordra.getDesign();
@@ -67,6 +82,7 @@ public class InitDataServlet extends HttpServlet {
         public String username;
         public String userId;
         public List<String> typesPermittedToCreate;
+        public JSONObject externalLoginConfig;
     }
 
 }
