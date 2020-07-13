@@ -189,11 +189,8 @@ public class Authenticator {
                 credsResponse = checkCredentialsAndReportResult(req, username, password);
             }
             else if (isKeycloakAuth(req)) {
-            	System.out.println("FOUND A KEYCLOAK HEADER, PERFORMING THE REQUIRED ACTIONS");
-            	
             	//check if the user already has an associated object.
             	credsResponse = initialiseKeycloakUser(req, authHeader);
-            	
             	//has already passed the keycloak authentication filter, so whitelist it
             }
             else if (isCordraKeyPairAuth(authHeader)) {
