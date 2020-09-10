@@ -254,7 +254,7 @@ public class Authenticator {
     	Map<String, Object> userObject = new HashMap<String, Object>();
 
     	userObject.put("id", prefixedUserId);
-    	userObject.put("username", username);
+    	userObject.put("username", fullname);
     	userObject.put("password", randomPassword(18));
     	
     	String userJson;

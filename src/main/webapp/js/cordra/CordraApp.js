@@ -184,6 +184,7 @@
 
           if(storedOptions.token!=null && storedOptions.keycloakConfig!=null){
             var parsedToken = JSON.parse(atob(storedOptions.token.split('.')[1]));
+            response['name'] = parsedToken.name;
             response['username'] = parsedToken.preferred_username;
             response['userId'] = parsedToken.sub;
             response['isActiveSession'] = true;
@@ -228,7 +229,7 @@
                 $("#authenticateDiv"),
                 onAuthenticationStateChange,
                 response.isActiveSession,
-                response.username,
+                response.user,
                 response.userId,
                 response.typesPermittedToCreate,
                 allowLogin
