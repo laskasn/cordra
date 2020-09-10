@@ -229,7 +229,7 @@
                 $("#authenticateDiv"),
                 onAuthenticationStateChange,
                 response.isActiveSession,
-                response.user,
+                response.name,
                 response.userId,
                 response.typesPermittedToCreate,
                 allowLogin
