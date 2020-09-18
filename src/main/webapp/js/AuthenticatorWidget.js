@@ -459,7 +459,8 @@ function AuthenticatorWidget(
 
     function onUsernameLabelClick(e) {
         e.preventDefault();
-        APP.resolveHandle(userInfo.userId);
+        window.location.href = "#objects/"+APP.getPrefix()+"/"+userInfo.userId;
+        //APP.resolveHandle(userInfo.userId);
     }
 
     function onAuthenticateSuccess(response) {
