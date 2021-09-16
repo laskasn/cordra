@@ -220,7 +220,7 @@ public class Authenticator {
     	String[] splits = jwt.split("\\.");
     	if(splits.length!=3)
     		return null;
-    	String jsonPayloadStr = new String(Base64.getDecoder().decode(splits[1].getBytes()));
+    	String jsonPayloadStr = new String(Base64.getUrlDecoder().decode(splits[1].getBytes()));
     	
     	JSONObject jsonPayload;
     	try {
