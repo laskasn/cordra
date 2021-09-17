@@ -1,5 +1,5 @@
 {
-	"url": "https://snf-3193.ok-kno.grnetcloud.net/auth",
-	"realm": "master",
-	"clientId": "cordra-client"
+	"url": "https://<KEYCLOAK HOST>/auth",
+	"realm": "<REALM ALIAS>",
+	"clientId": "<CLIENT ID>"
 }
